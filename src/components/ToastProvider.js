@@ -17,16 +17,39 @@ export function ToastProvider({ children }) {
   return (
     <ToastContext.Provider value={{ showToast }}>
       {children}
-      <div className="fixed top-24 right-8 z-[200] space-y-4 pointer-events-none print:hidden">
+      <div style={{
+        position: 'fixed',
+        bottom: '32px',
+        right: '32px',
+        zIndex: 100,
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '12px',
+        pointerEvents: 'none'
+      }}>
         {toasts.map((t) => (
           <div 
             key={t.id}
-            className={`px-6 py-4 rounded-2xl shadow-2xl border flex items-center gap-3 animate-in fade-in slide-in-from-right-10 duration-300 pointer-events-auto ${
-              t.type === 'success' ? 'bg-navy text-white border-glass-blue' : 'bg-red-50 text-red-600 border-red-100'
-            }`}
+            style={{
+              padding: '16px 24px',
+              borderRadius: '2px',
+              border: `1px solid ${t.type === 'success' ? '#4A9EDB' : '#E84040'}`,
+              background: t.type === 'success' ? '#F5A623' : '#E84040',
+              color: t.type === 'success' ? '#0C0C0C' : '#F0EDE8',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '12px',
+              pointerEvents: 'auto',
+              animation: 'slideIn 0.3s ease-out'
+            }}
           >
-            <span className="text-xl">{t.type === 'success' ? '✅' : '❌'}</span>
-            <span className="font-bold text-sm tracking-tight">{t.message}</span>
+            <span style={{ fontSize: '24px' }}>{t.type === 'success' ? '✅' : '❌'}</span>
+            <span style={{
+              fontFamily: 'Courier New, Courier, monospace',
+              fontWeight: 'bold',
+              fontSize: '20px',
+              letterSpacing: '0.12em'
+            }}>{t.message}</span>
           </div>
         ))}
       </div>

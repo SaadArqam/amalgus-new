@@ -17,20 +17,54 @@ export default function ServicePartnersPage() {
   });
 
   return (
-    <div className="min-h-screen bg-gray-50 pt-24 pb-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div style={{ minHeight: '100vh', background: '#0C0C0C', paddingTop: '28px', paddingBottom: '80px' }}>
+      <div style={{ maxWidth: '1440px', margin: '0 auto', padding: '0 24px' }}>
         
-        <div className="text-center mb-12 sm:mb-16">
-          <h1 className="text-3xl sm:text-5xl font-black text-navy mb-4 tracking-tight leading-tight">Expert Service Partners</h1>
-          <p className="text-gray-500 text-sm sm:text-lg max-w-2xl mx-auto px-2">Verified professionals for measuring, installing, and maintaining your glass projects.</p>
+        <div style={{ textAlign: 'center', marginBottom: '64px' }}>
+          <h1 style={{
+            color: '#F0EDE8',
+            fontFamily: 'Georgia, serif',
+            fontSize: 'clamp(42px, 7vw, 84px)',
+            fontWeight: 'normal',
+            lineHeight: '1.1',
+            marginBottom: '24px'
+          }}>Expert Service Partners</h1>
+          <p style={{
+            color: '#7A7570',
+            fontFamily: 'Courier New, Courier, monospace',
+            fontSize: '20px',
+            letterSpacing: '0.12em',
+            lineHeight: '1.5',
+            maxWidth: '800px',
+            margin: '0 auto'
+          }}>
+            Verified professionals for measuring, installing, and maintaining your glass projects.
+          </p>
         </div>
 
         {/* Filters */}
-        <div className="flex flex-wrap justify-center gap-4 mb-16">
+        <div style={{
+          display: 'flex',
+          justifyContent: 'center',
+          gap: '24px',
+          marginBottom: '64px',
+          flexWrap: 'wrap'
+        }}>
           <select 
             value={filterCity}
             onChange={(e) => setFilterCity(e.target.value)}
-            className="p-4 bg-white rounded-2xl border border-gray-100 shadow-sm font-bold text-navy outline-none focus:ring-2 focus:ring-glass-blue min-w-[200px]"
+            style={{
+              padding: '16px',
+              background: '#141414',
+              border: '1px solid #2A2A2A',
+              color: '#F0EDE8',
+              fontFamily: 'Courier New, Courier, monospace',
+              fontSize: '16px',
+              fontWeight: 'bold',
+              letterSpacing: '0.12em',
+              outline: 'none',
+              minWidth: '200px'
+            }}
           >
             <option value="">All Cities</option>
             {cities.map(c => <option key={c} value={c}>{c}</option>)}
@@ -38,7 +72,18 @@ export default function ServicePartnersPage() {
           <select 
             value={filterType}
             onChange={(e) => setFilterType(e.target.value)}
-            className="p-4 bg-white rounded-2xl border border-gray-100 shadow-sm font-bold text-navy outline-none focus:ring-2 focus:ring-glass-blue min-w-[200px]"
+            style={{
+              padding: '16px',
+              background: '#141414',
+              border: '1px solid #2A2A2A',
+              color: '#F0EDE8',
+              fontFamily: 'Courier New, Courier, monospace',
+              fontSize: '16px',
+              fontWeight: 'bold',
+              letterSpacing: '0.12em',
+              outline: 'none',
+              minWidth: '200px'
+            }}
           >
             <option value="">All Services</option>
             {types.map(t => <option key={t} value={t}>{t}</option>)}
@@ -46,48 +91,152 @@ export default function ServicePartnersPage() {
         </div>
 
         {/* Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filtered.map((partner) => (
-            <div key={partner.id} className="bg-white p-8 rounded-[40px] border border-gray-100 hover:shadow-2xl transition-all group">
-              <div className="flex justify-between items-start mb-6">
-                <div className="w-16 h-16 bg-navy/5 text-navy rounded-2xl flex items-center justify-center text-2xl font-black border border-navy/10">
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(3, 1fr)',
+          gap: '0px',
+          border: '1px solid #2A2A2A'
+        }}>
+          {filtered.map((partner, index) => (
+            <div key={partner.id} style={{
+              padding: '40px',
+              borderRight: (index + 1) % 3 !== 0 ? '1px solid #2A2A2A' : 'none',
+              borderBottom: index < filtered.length - 3 ? '1px solid #2A2A2A' : 'none',
+              background: 'transparent',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '32px'
+            }}>
+              <div style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'flex-start'
+              }}>
+                <div style={{
+                  width: '64px',
+                  height: '64px',
+                  background: '#141414',
+                  border: '1px solid #2A2A2A',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: '#F0EDE8',
+                  fontSize: '28px',
+                  fontFamily: 'Courier New, Courier, monospace',
+                  fontWeight: 'bold'
+                }}>
                   {partner.name.split(' ').map(n => n[0]).join('')}
                 </div>
-                <div className="flex flex-col items-end">
-                  <div className="flex text-yellow-400 mb-1">
+                <div style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'flex-end'
+                }}>
+                  <div style={{
+                    display: 'flex',
+                    color: '#F5A623',
+                    marginBottom: '4px'
+                  }}>
                     {[...Array(5)].map((_, i) => (
-                      <span key={i} className={i < Math.floor(partner.rating) ? 'fill-current' : 'text-gray-200'}>★</span>
+                      <span key={i} style={{
+                        color: i < Math.floor(partner.rating) ? '#F5A623' : '#2A2A2A'
+                      }}>★</span>
                     ))}
                   </div>
-                  <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">{partner.rating} Rating</span>
+                  <div style={{
+                    color: '#7A7570',
+                    fontFamily: 'Courier New, Courier, monospace',
+                    fontSize: '14px',
+                    fontWeight: 'bold',
+                    letterSpacing: '0.12em',
+                    textTransform: 'uppercase'
+                  }}>{partner.rating} Rating</div>
                 </div>
               </div>
 
-              <div className="flex items-center gap-2 mb-2">
-                <h3 className="text-2xl font-black text-navy">{partner.name}</h3>
-                <span className="text-green-500 text-xl" title="Verified Partner">✓</span>
-              </div>
-              
-              <p className="text-glass-blue font-bold text-sm mb-4">{partner.type} • {partner.experience} yrs exp</p>
-              
-              <div className="flex items-center gap-2 text-gray-500 text-sm mb-6">
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                </svg>
-                Serves: {partner.city}
-              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px'
+                }}>
+                  <h3 style={{
+                    color: '#F0EDE8',
+                    fontFamily: 'Courier New, Courier, monospace',
+                    fontSize: '28px',
+                    fontWeight: 'bold',
+                    letterSpacing: '0.12em',
+                    lineHeight: '1.2'
+                  }}>{partner.name}</h3>
+                  <span style={{
+                    color: '#3ECA7A',
+                    fontSize: '24px'
+                  }} title="Verified Partner">✓</span>
+                </div>
+                
+                <div style={{
+                  color: '#4A9EDB',
+                  fontFamily: 'Courier New, Courier, monospace',
+                  fontSize: '18px',
+                  fontWeight: 'bold',
+                  letterSpacing: '0.12em'
+                }}>
+                  {partner.type} • {partner.experience} yrs exp
+                </div>
+                
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  color: '#7A7570',
+                  fontFamily: 'Courier New, Courier, monospace',
+                  fontSize: '16px',
+                  letterSpacing: '0.12em'
+                }}>
+                  <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                  </svg>
+                  Serves: {partner.city}
+                </div>
 
-              <div className="flex flex-wrap gap-2 mb-8">
-                {partner.specializations.map(tag => (
-                  <span key={tag} className="px-3 py-1 bg-gray-50 text-[10px] uppercase font-black text-gray-400 rounded-full border border-gray-100">
-                    {tag}
-                  </span>
-                ))}
+                <div style={{
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                  gap: '8px'
+                }}>
+                  {partner.specializations.map(tag => (
+                    <span key={tag} style={{
+                      padding: '8px 12px',
+                      background: '#141414',
+                      border: '1px solid #2A2A2A',
+                      color: '#7A7570',
+                      fontFamily: 'Courier New, Courier, monospace',
+                      fontSize: '14px',
+                      fontWeight: 'bold',
+                      letterSpacing: '0.12em',
+                      textTransform: 'uppercase'
+                    }}>
+                      {tag}
+                    </span>
+                  ))}
+                </div>
               </div>
 
               <button 
                 onClick={() => showToast(`Service request sent to ${partner.name}!`)}
-                className="w-full bg-navy text-white py-4 rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-glass-blue hover:text-navy transition-all shadow-lg"
+                style={{
+                  width: '100%',
+                  padding: '16px',
+                  background: '#F5A623',
+                  color: '#0C0C0C',
+                  border: 'none',
+                  fontFamily: 'Courier New, Courier, monospace',
+                  fontSize: '14px',
+                  fontWeight: 'bold',
+                  letterSpacing: '0.12em',
+                  textTransform: 'uppercase',
+                  cursor: 'pointer'
+                }}
               >
                 Request Service
               </button>

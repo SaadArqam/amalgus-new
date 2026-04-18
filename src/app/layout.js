@@ -13,20 +13,20 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "GlassIQ | India's Most Intelligent Glass Marketplace",
+  title: "AmalGus | India's Most Intelligent Glass Marketplace",
   description: "India's most intelligent marketplace for glass and allied products. Find the best glass types, compare real-time vendor rates, and get instant technical matches powered by AI.",
-  keywords: ["glass marketplace", "toughened glass", "DGU glass", "architectural glass", "GlassIQ", "India glass rates"],
-  authors: [{ name: "GlassIQ Team" }],
+  keywords: ["glass marketplace", "toughened glass", "DGU glass", "architectural glass", "AmalGus", "India glass rates"],
+  authors: [{ name: "AmalGus Team" }],
   openGraph: {
-    title: "GlassIQ | Intelligent Glass Marketplace",
+    title: "AmalGus | Intelligent Glass Marketplace",
     description: "The intelligent marketplace connecting designers, architects, and builders with verified glass manufacturers.",
     type: "website",
     locale: "en_IN",
-    siteName: "GlassIQ",
+    siteName: "AmalGus",
   },
   twitter: {
     card: "summary_large_image",
-    title: "GlassIQ | Intelligent Glass Marketplace",
+    title: "AmalGus | Intelligent Glass Marketplace",
     description: "India's intelligent B2B2C glass marketplace.",
   },
 };
@@ -35,9 +35,18 @@ export default function RootLayout({ children }) {
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable}`}
+      style={{ height: '100%', WebkitFontSmoothing: 'antialiased' }}
     >
-      <body className="min-h-full flex flex-col bg-slate-950 text-white selection:bg-amber-500 selection:text-slate-950">
+      <body style={{
+        minHeight: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        background: '#0C0C0C',
+        color: '#F0EDE8',
+        selectionBackground: '#F5A623',
+        selectionColor: '#0C0C0C'
+      }}>
         <ClientLayout>
           {children}
         </ClientLayout>

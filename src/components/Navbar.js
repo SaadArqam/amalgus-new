@@ -9,23 +9,34 @@ export default function Navbar() {
   const { showToast } = useToast();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
+  const [isLargeScreen, setIsLargeScreen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
+    const checkScreenSize = () => {
+      setIsLargeScreen(window.innerWidth >= 1024);
     };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    checkScreenSize();
+    window.addEventListener('resize', checkScreenSize);
+    return () => window.removeEventListener('resize', checkScreenSize);
   }, []);
 
   const navLinks = [
-    { name: 'Products', href: '/catalog' },
-    { name: 'Smart Match', href: '/smart-match', highlight: true },
-    { name: 'Vendors', href: '/vendors' },
-    { name: 'Rates', href: '/rates' },
-    { name: 'Services', href: '/service-partners' },
+    { name: 'CATALOG', href: '/catalog' },
+    { name: 'AI MATCH', href: '/smart-match' },
+    { name: 'RATES', href: '/rates' },
+    { name: 'VENDORS', href: '/vendors' },
+    { name: 'SERVICES', href: '/service-partners' },
   ];
+
+  const getRoleColor = (role) => {
+    switch(role) {
+      case 'Homeowner': return '#3ECA7A';
+      case 'Architect': return '#4A9EDB';
+      case 'Builder': return '#E84040';
+      case 'Dealer': return '#F5A623';
+      default: return '#7A7570';
+    }
+  };
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -43,185 +54,440 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled 
-          ? 'bg-slate-950/80 backdrop-blur-xl border-b border-slate-800' 
-          : 'bg-transparent'
-      }`}>
-        <div className="max-w-[1440px] mx-auto px-6">
-          <div className="flex justify-between h-20 items-center">
-            
-            <div className="flex items-center gap-8">
-              <Link href="/" className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-gradient-to-br from-amber-500 to-orange-500 rounded-xl flex items-center justify-center">
-                  <span className="text-xl font-black text-slate-950">G</span>
-                </div>
-                <span className="text-xl font-black tracking-tight text-white">
-                  GlassIQ
-                </span>
+      {/* Amber Ticker Bar */}
+      <div style={{
+        height: '28px',
+        background: '#F5A623',
+        overflow: 'hidden',
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        zIndex: 60
+      }}>
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          height: '100%',
+          whiteSpace: 'nowrap',
+          paddingLeft: '100%'
+        }}>
+          <span style={{
+            color: '#0C0C0C',
+            fontFamily: "'Courier New', Courier, monospace",
+            fontSize: '21px',
+            fontWeight: 'bold',
+            letterSpacing: '0.12em',
+            paddingRight: '100px'
+          }}>
+            INDIA'S FIRST GLASS INTELLIGENCE PLATFORM ⬥ LIVE FACTORY RATES UPDATED DAILY ⬥ AI-POWERED PRODUCT MATCHING ⬥ VERIFIED VENDOR NETWORK ⬥ ROLE-BASED PRICING ⬥ INSTANT ESTIMATES
+          </span>
+        </div>
+      </div>
+
+      {/* Main Navigation */}
+      <nav style={{
+        position: 'fixed',
+        top: '28px',
+        left: 0,
+        right: 0,
+        zIndex: 50,
+        background: '#0C0C0C',
+        borderBottom: '1px solid #2A2A2A',
+        height: '56px'
+      }}>
+        <div style={{
+          maxWidth: '1440px',
+          margin: '0 auto',
+          padding: '0 24px',
+          height: '100%',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between'
+        }}>
+          
+          {/* Logo */}
+          <Link href="/" style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '12px',
+            textDecoration: 'none'
+          }}>
+            <div style={{
+              width: '32px',
+              height: '32px',
+              border: '2px solid #F5A623',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              background: 'transparent'
+            }}>
+              <span style={{
+                color: '#F5A623',
+                fontFamily: "'Courier New', Courier, monospace",
+                fontSize: '26px',
+                fontWeight: 'bold'
+              }}>A</span>
+            </div>
+            <span style={{
+              color: '#F0EDE8',
+              fontFamily: "'Courier New', Courier, monospace",
+              fontSize: '24px',
+              fontWeight: 'bold',
+              letterSpacing: '0.12em'
+            }}>AMALGUS</span>
+          </Link>
+          
+          {/* Desktop Nav Links */}
+          <div style={{
+            display: isLargeScreen ? 'flex' : 'none',
+            alignItems: 'center',
+            gap: '32px'
+          }}>
+            {navLinks.map((link) => (
+              <Link 
+                key={link.name}
+                href={link.href} 
+                style={{
+                  color: '#7A7570',
+                  fontFamily: "'Courier New', Courier, monospace",
+                  fontSize: '21px',
+                  fontWeight: 'bold',
+                  letterSpacing: '0.12em',
+                  textDecoration: 'none',
+                  borderBottom: '2px solid transparent',
+                  transition: 'all 0.2s ease'
+                }}
+                onMouseEnter={(e) => {
+                  e.target.style.color = '#F0EDE8';
+                  e.target.style.background = '#141414';
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.color = '#7A7570';
+                  e.target.style.background = 'transparent';
+                }}
+              >
+                {link.name}
               </Link>
-              
-              <div className="hidden xl:flex items-center gap-6">
-                {role && (
-                  <div className="flex items-center gap-2 bg-slate-900/50 px-4 py-2 rounded-full border border-slate-700">
-                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                    <span className="text-sm font-semibold text-slate-300">
-                      Welcome, <span className="text-amber-400">{role}</span>
-                    </span>
-                  </div>
-                )}
+            ))}
+          </div>
+
+          {/* Right Side */}
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '16px'
+          }}>
+            {/* Role Badge */}
+            {role && (
+              <div style={{
+                display: isLargeScreen ? 'flex' : 'none',
+                alignItems: 'center',
+                gap: '8px',
+                padding: '6px 12px',
+                border: `1px solid ${getRoleColor(role)}`,
+                background: 'transparent'
+              }}>
+                <div style={{
+                  width: '6px',
+                  height: '6px',
+                  borderRadius: '50%',
+                  background: getRoleColor(role)
+                }}></div>
+                <span style={{
+                  color: '#7A7570',
+                  fontFamily: "'Courier New', Courier, monospace",
+                  fontSize: '20px',
+                  fontWeight: 'bold',
+                  letterSpacing: '0.12em'
+                }}>{role}</span>
               </div>
-            </div>
+            )}
             
-            <div className="hidden lg:flex items-center space-x-2">
-              {navLinks.map((link) => (
-                <Link 
-                  key={link.name}
-                  href={link.href} 
-                  className={`px-4 py-2 rounded-xl text-sm font-semibold transition-all ${
-                    link.highlight 
-                      ? 'text-amber-400 bg-amber-500/10' 
-                      : 'text-slate-400 hover:text-white hover:bg-slate-800'
-                  }`}
-                >
-                  {link.name}
-                </Link>
-              ))}
-            </div>
+            {/* Role Button */}
+            <button 
+              onClick={() => setIsModalOpen(true)}
+              style={{
+                display: isLargeScreen ? 'block' : 'none',
+                padding: '8px 16px',
+                border: '1px solid #2A2A2A',
+                background: 'transparent',
+                color: '#7A7570',
+                fontFamily: "'Courier New', Courier, monospace",
+                fontSize: '16px',
+                fontWeight: 'bold',
+                letterSpacing: '0.12em',
+                cursor: 'pointer'
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.background = '#141414';
+                e.target.style.borderColor = '#F5A623';
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.background = 'transparent';
+                e.target.style.borderColor = '#2A2A2A';
+              }}
+            >
+              ROLE
+            </button>
 
-            <div className="flex items-center gap-4">
-              <button 
-                onClick={() => setIsModalOpen(true)}
-                className="hidden md:flex items-center gap-2 px-5 py-2.5 rounded-xl border border-slate-700 text-sm font-semibold text-slate-300 hover:border-amber-500/50 hover:text-amber-400 transition-all"
-              >
-                <span>Switch Role</span>
-              </button>
-              
-              <div className="hidden sm:flex items-center gap-3">
-                {user ? (
-                  <button 
-                    onClick={logout}
-                    className="px-5 py-2.5 rounded-xl bg-slate-800 text-slate-300 text-sm font-semibold hover:bg-slate-700 transition-all"
-                  >
-                    {user.name}
-                  </button>
+            
+            {/* Estimate Button */}
+            <Link href="/estimate" style={{
+              padding: '8px 16px',
+              background: '#F5A623',
+              color: '#0C0C0C',
+              fontFamily: "'Courier New', Courier, monospace",
+              fontSize: '16px',
+              fontWeight: 'bold',
+              letterSpacing: '0.12em',
+              textDecoration: 'none',
+              cursor: 'pointer'
+            }}>
+              ESTIMATE →
+            </Link>
+
+            {/* Mobile Menu Toggle */}
+            <button 
+              style={{
+                display: isLargeScreen ? 'none' : 'flex',
+                background: 'none',
+                border: 'none',
+                color: '#7A7570',
+                cursor: 'pointer',
+                padding: '4px'
+              }}
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            >
+              <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                {isMobileMenuOpen ? (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
                 ) : (
-                  <button 
-                    onClick={() => setIsAuthModalOpen(true)}
-                    className="px-5 py-2.5 rounded-xl text-slate-300 text-sm font-semibold hover:text-white transition-all"
-                  >
-                    Sign In
-                  </button>
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16m-7 6h7" />
                 )}
-                <Link href="/estimate" className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 font-bold text-sm hover:from-amber-400 hover:to-orange-400 transition-all shadow-lg shadow-amber-500/20">
-                  Get Estimate
-                </Link>
-              </div>
-
-              <button 
-                className="lg:hidden p-2 text-slate-300 hover:text-white transition-colors"
-                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              >
-                <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  {isMobileMenuOpen ? (
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-                  ) : (
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16m-7 6h7" />
-                  )}
-                </svg>
-              </button>
-            </div>
+              </svg>
+            </button>
           </div>
         </div>
 
+        {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="lg:hidden bg-slate-950 border-t border-slate-800">
-            <div className="px-6 py-8 space-y-4">
+          <div style={{
+            display: isLargeScreen ? 'none' : 'block',
+            background: '#0C0C0C',
+            borderTop: '1px solid #2A2A2A'
+          }}>
+            <div style={{
+              padding: '24px',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '4px'
+            }}>
               {navLinks.map((link) => (
                 <Link 
                   key={link.name}
                   href={link.href} 
-                  className={`block px-4 py-4 rounded-2xl text-lg font-semibold ${
-                    link.highlight 
-                      ? 'text-amber-400 bg-amber-500/10' 
-                      : 'text-slate-300 hover:bg-slate-900'
-                  }`}
+                  style={{
+                    display: 'block',
+                    padding: '12px 16px',
+                    border: '1px solid #2A2A2A',
+                    color: '#7A7570',
+                    fontFamily: "'Courier New', Courier, monospace",
+                    fontSize: '15px',
+                    fontWeight: 'bold',
+                    letterSpacing: '0.12em',
+                    textDecoration: 'none'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.target.style.background = '#141414';
+                    e.target.style.color = '#F0EDE8';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.target.style.background = 'transparent';
+                    e.target.style.color = '#7A7570';
+                  }}
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   {link.name}
                 </Link>
               ))}
               
-              <div className="pt-6 border-t border-slate-800 space-y-3">
+              <div style={{
+                display: 'flex',
+                gap: '8px',
+                marginTop: '16px'
+              }}>
                 <button 
                   onClick={() => {
                     setIsModalOpen(true);
                     setIsMobileMenuOpen(false);
                   }}
-                  className="w-full px-4 py-4 rounded-2xl text-left text-slate-400 font-semibold hover:bg-slate-900"
+                  style={{
+                    flex: 1,
+                    padding: '12px 16px',
+                    border: '1px solid #2A2A2A',
+                    background: 'transparent',
+                    color: '#7A7570',
+                    fontFamily: "'Courier New', Courier, monospace",
+                    fontSize: '14px',
+                    fontWeight: 'bold',
+                    letterSpacing: '0.12em',
+                    cursor: 'pointer'
+                  }}
                 >
-                  Switch Role
+                  ROLE
                 </button>
-                <div className="flex gap-3">
-                  {user ? (
-                    <button 
-                      onClick={logout} 
-                      className="flex-1 px-4 py-4 rounded-2xl bg-slate-900 text-slate-300 font-semibold"
-                    >
-                      Sign Out
-                    </button>
-                  ) : (
-                    <button 
-                      onClick={() => {
-                        setIsAuthModalOpen(true);
-                        setIsMobileMenuOpen(false);
-                      }}
-                      className="flex-1 px-4 py-4 rounded-2xl bg-slate-900 text-slate-300 font-semibold"
-                    >
-                      Sign In
-                    </button>
-                  )}
-                  <Link 
-                    href="/estimate" 
-                    className="flex-1 px-4 py-4 rounded-2xl bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 font-bold text-center"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    Get Estimate
-                  </Link>
-                </div>
+                <Link 
+                  href="/estimate" 
+                  style={{
+                    flex: 1,
+                    padding: '12px 16px',
+                    background: '#F5A623',
+                    color: '#0C0C0C',
+                    fontFamily: "'Courier New', Courier, monospace",
+                    fontSize: '14px',
+                    fontWeight: 'bold',
+                    letterSpacing: '0.12em',
+                    textAlign: 'center',
+                    textDecoration: 'none'
+                  }}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  ESTIMATE →
+                </Link>
               </div>
             </div>
           </div>
         )}
       </nav>
 
-      {/* Spacer to prevent content from going under fixed navbar */}
-      <div className="h-20"></div>
-
+      {/* Spacer */}
+      <div style={{ height: '84px' }}></div>
+      
+      {/* Auth Modal */}
       {isAuthModalOpen && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-          <div className="absolute inset-0 bg-slate-950/80 backdrop-blur-xl" onClick={() => setIsAuthModalOpen(false)}></div>
-          <div className="bg-slate-900 rounded-[2rem] p-10 max-w-md w-full relative z-10 shadow-2xl border border-slate-800">
-            <div className="flex justify-between items-start mb-8">
-              <div>
-                <h3 className="text-3xl font-black text-white mb-2">Welcome Back</h3>
-                <p className="text-slate-400 text-sm">Sign in to your GlassIQ account</p>
-              </div>
-              <button onClick={() => setIsAuthModalOpen(false)} className="p-2 hover:bg-slate-800 rounded-xl transition-colors text-slate-400">
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
-              </button>
+        <div style={{
+          position: 'fixed',
+          inset: 0,
+          zIndex: 100,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: '16px',
+          background: 'rgba(0,0,0,0.92)',
+          backdropFilter: 'blur(8px)'
+        }}>
+          <div style={{
+            background: '#141414',
+            border: '1px solid #2A2A2A',
+            maxWidth: '640px',
+            width: '100%',
+            padding: '32px',
+            position: 'relative'
+          }}>
+            <button 
+              onClick={() => setIsAuthModalOpen(false)}
+              style={{
+                position: 'absolute',
+                top: '16px',
+                right: '16px',
+                background: 'none',
+                border: 'none',
+                color: '#7A7570',
+                cursor: 'pointer',
+                padding: '8px'
+              }}
+            >
+              <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+            
+            <div style={{ marginBottom: '24px' }}>
+              <h3 style={{
+                color: '#F0EDE8',
+                fontFamily: 'Georgia, serif',
+                fontSize: '28px',
+                fontWeight: 'normal',
+                marginBottom: '8px'
+              }}>Welcome Back</h3>
+              <p style={{
+                color: '#7A7570',
+                fontFamily: "'Courier New', Courier, monospace",
+                fontSize: '16px',
+                letterSpacing: '0.12em'
+              }}>SIGN IN TO YOUR AMALGUS ACCOUNT</p>
             </div>
-            <form className="space-y-5" onSubmit={handleLogin}>
+            
+            <form onSubmit={handleLogin} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
               <div>
-                <label className="block text-xs font-black uppercase text-slate-500 mb-2 tracking-widest">Email</label>
-                <input name="email" type="email" required placeholder="name@company.com" className="w-full px-5 py-4 bg-slate-950 rounded-xl border border-slate-700 outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500/50 font-semibold text-white placeholder-slate-600 transition-all" />
+                <label style={{
+                  display: 'block',
+                  color: '#7A7570',
+                  fontFamily: "'Courier New', Courier, monospace",
+                  fontSize: '14px',
+                  fontWeight: 'bold',
+                  letterSpacing: '0.12em',
+                  marginBottom: '8px'
+                }}>EMAIL</label>
+                <input 
+                  name="email" 
+                  type="email" 
+                  required 
+                  placeholder="name@company.com" 
+                  style={{
+                    width: '100%',
+                    padding: '12px 16px',
+                    background: '#0C0C0C',
+                    border: '1px solid #2A2A2A',
+                    color: '#F0EDE8',
+                    fontFamily: "'Courier New', Courier, monospace",
+                    fontSize: '20px',
+                    outline: 'none'
+                  }}
+                />
               </div>
               <div>
-                <label className="block text-xs font-black uppercase text-slate-500 mb-2 tracking-widest">Password</label>
-                <input type="password" required placeholder="••••••••" className="w-full px-5 py-4 bg-slate-950 rounded-xl border border-slate-700 outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500/50 font-semibold text-white placeholder-slate-600 transition-all" />
+                <label style={{
+                  display: 'block',
+                  color: '#7A7570',
+                  fontFamily: "'Courier New', Courier, monospace",
+                  fontSize: '14px',
+                  fontWeight: 'bold',
+                  letterSpacing: '0.12em',
+                  marginBottom: '8px'
+                }}>PASSWORD</label>
+                <input 
+                  type="password" 
+                  required 
+                  placeholder="••••••••" 
+                  style={{
+                    width: '100%',
+                    padding: '12px 16px',
+                    background: '#0C0C0C',
+                    border: '1px solid #2A2A2A',
+                    color: '#F0EDE8',
+                    fontFamily: "'Courier New', Courier, monospace",
+                    fontSize: '20px',
+                    outline: 'none'
+                  }}
+                />
               </div>
-              <button type="submit" className="w-full py-4 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 font-black uppercase tracking-widest text-sm hover:from-amber-400 hover:to-orange-400 shadow-xl">
-                Sign In
+              <button 
+                type="submit" 
+                style={{
+                  padding: '16px',
+                  background: '#F5A623',
+                  color: '#0C0C0C',
+                  border: 'none',
+                  fontFamily: "'Courier New', Courier, monospace",
+                  fontSize: '20px',
+                  fontWeight: 'bold',
+                  letterSpacing: '0.12em',
+                  cursor: 'pointer'
+                }}
+              >
+                SIGN IN
               </button>
             </form>
           </div>

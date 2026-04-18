@@ -1,117 +1,113 @@
-# GlassIQ by AmalGus — India's Most Intelligent Glass Marketplace
+# AmalGus
 
-> **"GlassIQ: Making Glass Simple for Everyone"**
+*India's Most Intelligent B2B2C Glass Marketplace*
 
-GlassIQ is a sophisticated digital marketplace designed to transform the glass industry. By connecting Homeowners, Architects, Builders, and Dealers directly with verified manufacturers and service partners, we bring transparency, speed, and AI-driven precision to a traditionally fragmented sector.
-
-![GlassIQ Architecture](https://img.shields.io/badge/Architecture-Next.js%2016%20App%20Router-blue?style=for-the-badge)
-![UI/UX](https://img.shields.io/badge/Design-Tailwind%20CSS%20%26%20Glassmorphism-F59E0B?style=for-the-badge)
-![AI](https://img.shields.io/badge/AI-Groq%20%26%20Google%20Gemini-black?style=for-the-badge)
+A precision-engineered marketplace that brings AI-powered glass matching, live factory rates, and multi-vendor comparison to India's $150B+ glass industry. Built in 24 hours as an internship prototype for AmalGus Technology.
 
 ---
 
-## 🚀 Key Features
+## Overview
 
-### Core Experience ✅
-- [x] **Smart Role Selection**: Tailored UX for Homeowners, Architects, Builders, and Dealers with persistent state using React Context.
-- [x] **Glass Catalog**: Complete catalog with 8 standard glass types, advanced filtering, and product detail pages.
-- [x] **Product Detail Pages**: Technical specs, tags, and "Complete Your System" section with allied products cross-sell.
-- [x] **Estimate Generator**: Millimeter-to-Sqft conversion with GST @18% and role-based discounts.
-- [x] **Download Estimate**: Print/PDF functionality for professional estimates.
-
-### AI & Market Intelligence ✅
-- [x] **Smart AI Matcher**: Describe your requirement in plain English and get technical glass specs powered by Google Gemini.
-- [x] **Daily Rates Dashboard**: Real-time market pulse with trend data.
-- [x] **Multi-Vendor Comparison**: Compare live prices from multiple factories per product.
-
-### Partner Ecosystem ✅
-- [x] **Vendor Directory**: Vetted manufacturing partners across major Indian cities.
-- [x] **Service Partners**: Direct access to Glaziers, Installers, and Measurement teams.
-- [x] **Allied Products**: Comprehensive hardware, sealants, and accessories for complete system solutions.
+AmalGus addresses the structural gap in India's fragmented glass industry through intelligent automation and transparent pricing. The platform combines AI-powered matching, real-time factory rates, and role-based UX to serve homeowners, architects, builders, and dealers from a single interface. Built as a functional prototype demonstrating industrial-grade engineering under extreme time constraints.
 
 ---
 
-## 🛠 Tech Stack
+## Live Demo + Repository
 
-- **Framework**: Next.js 16 (App Router)
-- **Styling**: Tailwind CSS v4
-- **AI Engine**: Groq (Llama 3.3 70B) or Google Gemini API
-- **State Management**: React Context API (Roles & Toasts)
-- **Deployment**: Vercel Ready
-- **Colors**: Deep slate (#0f172a) primary, Amber (#F59E0B) accent
+[Live Demo](https://amalgus-new-zeta.vercel.app) | [GitHub](https://github.com/SaadArqam/amalgus-new)
 
 ---
 
-## 💻 Getting Started
+## Tech Stack
 
-### 1. Clone the repository
+| Layer | Choice |
+|---|---|
+| Framework | Next.js 15 (App Router) |
+| Styling | Tailwind CSS + inline CSS variables |
+| AI Engine | OpenAI API (GPT-4o-mini) |
+| State | React Context API |
+| Data | Local JSON (prototype phase) |
+| Deployment | Vercel |
+
+---
+
+## Features
+
+### Core Features
+
+- **Glass Product Catalog** — Complete catalog with filters by thickness, process, and application
+- **AI Smart Matcher** — Plain English input → technical glass recommendations
+- **Estimate Engine** — mm to sq.ft conversion, GST @18%, role-based discounts
+- **Daily Rate Dashboard** — Live factory price feed with trend indicators
+- **Multi-Vendor Comparison** — 3+ verified sources per product with delivery timelines
+- **Responsive UI** — Mobile-first, works across all screen sizes
+
+### Bonus Features
+
+- **Customer Role System** — Homeowner / Architect / Builder / Dealer with persistent localStorage
+- **Role-based discounts** — Homeowner 0% / Architect 5% / Builder 8% / Dealer 12%
+- **Allied Products** — Cross-sell on every product detail page
+- **Service Partner directory** — City and type filters
+- **Vendor directory** — Price adjustment indicators
+
+---
+
+## AI Matcher — Sample Queries
+
+| Query | Recommended Glass |
+|---|---|
+| "Glass for my bathroom shower" | 8mm Toughened — tempered for safety |
+| "Soundproof glass for office cabin" | 10mm Laminated or DGU Acoustic |
+| "Glass railing for 15th floor balcony" | 12mm Toughened + Laminated — height safety |
+| "Energy efficient south-facing facade" | Low-E DGU — solar heat control |
+
+---
+
+## Getting Started
+
 ```bash
-git clone https://github.com/yourusername/glassiq.git
-cd glassiq
-```
+# Clone
+git clone https://github.com/SaadArqam/amalgus-new.git
+cd amalgus-new
 
-### 2. Install dependencies
-```bash
+# Install
 npm install
-```
 
-### 3. Set up Environment Variables
-Create a `.env.local` file in the root:
-```env
-NEXT_PUBLIC_GROQ_KEY=your_groq_key_here
-NEXT_PUBLIC_GEMINI_KEY=your_gemini_key_here
-```
+# Environment
+cp .env.example .env.local
+# Add your key: NEXT_PUBLIC_OPENAI_KEY=your_key_here
 
-**How to get API keys:**
-- **Groq**: https://console.groq.com/keys
-- **Google Gemini**: https://aistudio.google.com/app/apikey
-
-**Note**: Groq key should start with `gsk_` — the app automatically detects which one to use based on your key! If both are provided, Groq is used first.
-
-### 4. Run Locally
-```bash
+# Run
 npm run dev
 ```
-Open [http://localhost:3000](http://localhost:3000) to view the application.
+
+Open `http://localhost:3000`
 
 ---
 
-## Sample AI Queries to Try 🎯
+## Environment Variables
 
-1. **"I need glass for my bathroom shower"** → 8mm Toughened (tempered for safety)
-2. **"Soundproof glass for my office cabin"** → 10mm Laminated or DGU Acoustic
-3. **"Glass railing for my balcony on 15th floor"** → 12mm Toughened + Laminated (height safety)
-4. **"Energy efficient glass for south-facing facade"** → Low-E DGU (solar heat control)
-
----
-
-## Customer Role Discounts 📊
-
-- **Homeowner**: 0% discount
-- **Architect**: 5% discount
-- **Builder**: 8% discount
-- **Dealer**: 12% discount
+```env
+NEXT_PUBLIC_OPENAI_KEY=your_openai_key_here
+```
 
 ---
 
-## Glass Product Catalog 🪟
+## Architecture Overview
 
-1. **Clear Float** (5mm, Plain, Windows, ₹45–₹60/sqft)
-2. **Toughened** (8mm, Tempered, Shower Enclosure, ₹120–₹160/sqft)
-3. **Laminated** (10mm, PVB Laminated, Railing/Safety, ₹180–₹250/sqft)
-4. **DGU/IGU** (6+12+6mm, Insulated, Facade/Curtain Wall, ₹350–₹500/sqft)
-5. **Frosted** (6mm, Acid Etched, Partition/Privacy, ₹85–₹110/sqft)
-6. **Reflective** (6mm, Coated, Exterior Facade, ₹100–₹140/sqft)
-7. **Low-E Glass** (6mm, Soft Coat, Energy Efficient, ₹200–₹300/sqft)
-8. **Back-Painted** (8mm, Lacquered, Kitchen/Decorative, ₹150–₹220/sqft)
+GlassIQ leverages Next.js 15 Route Handlers for lightweight backend operations, using local JSON persistence during prototype phase. The frontend implements React Context API for global state management (roles & notifications) and Tailwind CSS with CSS variables for the dark industrial design system. The AI engine processes natural language queries through OpenAI's GPT-4o-mini, converting user requirements into technical glass specifications.
 
 ---
 
-## 📜 Architecture Overview
-GlassIQ leverages **Next.js 16 Route Handlers** for a lightweight backend, using local JSON persistence for the prototype phase. The frontend utilizes **React Context API** for global state management (Roles & Toasts) and **Tailwind CSS** for a premium, industrial design language.
+## Customer Role System
+
+- **Homeowner** — 0% discount, consumer-focused UX
+- **Architect** — 5% discount, technical specifications priority
+- **Builder** — 8% discount, bulk ordering features
+- **Dealer** — 12% discount, wholesale pricing and margins
+
+Role selection persists in localStorage, enabling personalized pricing and feature access across sessions.
 
 ---
 
-## 🛡 Disclaimer
-*This project is a functional architectural prototype built for GlassIQ by AmalGus. Market rates and vendor data are mocked for demonstration purposes. Developed with ❤️ for the Indian Glass Industry.*
-# amalgus-new
+*Functional prototype built for AmalGus Technology internship. Market rates and vendor data are simulated for demonstration purposes.*

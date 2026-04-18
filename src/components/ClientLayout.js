@@ -10,7 +10,7 @@ export default function ClientLayout({ children }) {
     <ToastProvider>
       <RoleProvider>
         <Navbar />
-        <main className="flex-grow">
+        <main style={{ flexGrow: 1 }}>
           {children}
         </main>
         <Footer />

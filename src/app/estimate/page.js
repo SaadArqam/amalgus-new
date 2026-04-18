@@ -79,49 +79,222 @@ export default function EstimatePage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white pt-24 pb-20 print:bg-white print:pt-0">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="flex flex-col lg:flex-row gap-12">
-          <div className="w-full lg:w-1/3 space-y-8 print:hidden">
-            <div className="bg-slate-900/50 backdrop-blur-sm p-8 rounded-[2rem] border border-slate-800">
-              <h2 className="text-2xl font-black text-white mb-8">Estimate Parameters</h2>
-              <div className="space-y-6">
+    <div style={{ minHeight: '100vh', background: '#0C0C0C', paddingTop: '28px', paddingBottom: '80px' }}>
+      <div style={{ maxWidth: '1440px', margin: '0 auto', padding: '0 24px' }}>
+        <div style={{ display: 'flex', gap: '48px' }}>
+          
+          {/* Left Panel - Parameters */}
+          <div style={{ width: '400px', flexShrink: 0 }}>
+            <div style={{
+              border: '1px solid #2A2A2A',
+              padding: '32px',
+              marginBottom: '32px',
+              display: 'block'
+            }} className="print:hidden">
+              <h2 style={{
+                color: '#F0EDE8',
+                fontFamily: 'Courier New, Courier, monospace',
+                fontSize: '20px',
+                fontWeight: 'bold',
+                letterSpacing: '0.12em',
+                marginBottom: '32px'
+              }}>ESTIMATE PARAMETERS</h2>
+              
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+                {/* Glass Type */}
                 <div>
-                  <label className="block text-xs font-black uppercase text-slate-400 mb-3 tracking-widest">Glass Type</label>
-                  <select name="glassTypeId" value={formData.glassTypeId} onChange={handleInputChange} className="w-full p-4 bg-slate-800 border border-slate-700 rounded-xl outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500/50 font-bold text-white">
+                  <div style={{
+                    color: '#7A7570',
+                    fontFamily: 'Courier New, Courier, monospace',
+                    fontSize: '14px',
+                    fontWeight: 'bold',
+                    letterSpacing: '0.12em',
+                    textTransform: 'uppercase',
+                    marginBottom: '8px'
+                  }}>Glass Type</div>
+                  <select 
+                    name="glassTypeId" 
+                    value={formData.glassTypeId} 
+                    onChange={handleInputChange}
+                    style={{
+                      width: '100%',
+                      padding: '12px',
+                      background: '#141414',
+                      border: '1px solid #2A2A2A',
+                      color: '#F0EDE8',
+                      fontFamily: 'Courier New, Courier, monospace',
+                      fontSize: '16px',
+                      fontWeight: 'bold',
+                      letterSpacing: '0.12em',
+                      outline: 'none'
+                    }}
+                  >
                     {glassProducts.map(p => <option key={p.id} value={p.id}>{p.name} ({p.thickness})</option>)}
                   </select>
                 </div>
-                <div className="grid grid-cols-2 gap-4">
+
+                {/* Dimensions */}
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
                   <div>
-                    <label className="block text-xs font-black uppercase text-slate-400 mb-3 tracking-widest">Width (mm)</label>
-                    <input type="number" name="width" value={formData.width} onChange={handleInputChange} className="w-full p-4 bg-slate-800 border border-slate-700 rounded-xl outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500/50 font-bold text-white"/>
+                    <div style={{
+                      color: '#7A7570',
+                      fontFamily: 'Courier New, Courier, monospace',
+                      fontSize: '14px',
+                      fontWeight: 'bold',
+                      letterSpacing: '0.12em',
+                      textTransform: 'uppercase',
+                      marginBottom: '8px'
+                    }}>Width (mm)</div>
+                    <input 
+                      type="number" 
+                      name="width" 
+                      value={formData.width} 
+                      onChange={handleInputChange}
+                      style={{
+                        width: '100%',
+                        padding: '12px',
+                        background: '#141414',
+                        border: '1px solid #2A2A2A',
+                        color: '#F0EDE8',
+                        fontFamily: 'Courier New, Courier, monospace',
+                        fontSize: '16px',
+                        fontWeight: 'bold',
+                        letterSpacing: '0.12em',
+                        outline: 'none'
+                      }}
+                    />
                   </div>
                   <div>
-                    <label className="block text-xs font-black uppercase text-slate-400 mb-3 tracking-widest">Height (mm)</label>
-                    <input type="number" name="height" value={formData.height} onChange={handleInputChange} className="w-full p-4 bg-slate-800 border border-slate-700 rounded-xl outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500/50 font-bold text-white"/>
+                    <div style={{
+                      color: '#7A7570',
+                      fontFamily: 'Courier New, Courier, monospace',
+                      fontSize: '14px',
+                      fontWeight: 'bold',
+                      letterSpacing: '0.12em',
+                      textTransform: 'uppercase',
+                      marginBottom: '8px'
+                    }}>Height (mm)</div>
+                    <input 
+                      type="number" 
+                      name="height" 
+                      value={formData.height} 
+                      onChange={handleInputChange}
+                      style={{
+                        width: '100%',
+                        padding: '12px',
+                        background: '#141414',
+                        border: '1px solid #2A2A2A',
+                        color: '#F0EDE8',
+                        fontFamily: 'Courier New, Courier, monospace',
+                        fontSize: '16px',
+                        fontWeight: 'bold',
+                        letterSpacing: '0.12em',
+                        outline: 'none'
+                      }}
+                    />
                   </div>
                 </div>
+
+                {/* Quantity */}
                 <div>
-                  <label className="block text-xs font-black uppercase text-slate-400 mb-3 tracking-widest">Quantity (Panels)</label>
-                  <input type="number" name="quantity" value={formData.quantity} onChange={handleInputChange} className="w-full p-4 bg-slate-800 border border-slate-700 rounded-xl outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500/50 font-bold text-white"/>
+                  <div style={{
+                    color: '#7A7570',
+                    fontFamily: 'Courier New, Courier, monospace',
+                    fontSize: '14px',
+                    fontWeight: 'bold',
+                    letterSpacing: '0.12em',
+                    textTransform: 'uppercase',
+                    marginBottom: '8px'
+                  }}>Quantity (Panels)</div>
+                  <input 
+                    type="number" 
+                    name="quantity" 
+                    value={formData.quantity} 
+                    onChange={handleInputChange}
+                    style={{
+                      width: '100%',
+                      padding: '12px',
+                      background: '#141414',
+                      border: '1px solid #2A2A2A',
+                      color: '#F0EDE8',
+                      fontFamily: 'Courier New, Courier, monospace',
+                      fontSize: '16px',
+                      fontWeight: 'bold',
+                      letterSpacing: '0.12em',
+                      outline: 'none'
+                    }}
+                  />
                 </div>
+
+                {/* Role Display */}
                 <div>
-                  <label className="block text-xs font-black uppercase text-slate-400 mb-3 tracking-widest">Selected Customer Role</label>
-                  <div className="w-full p-5 bg-gradient-to-br from-amber-500/10 to-orange-500/10 border border-amber-500/20 rounded-xl font-black text-white">
+                  <div style={{
+                    color: '#7A7570',
+                    fontFamily: 'Courier New, Courier, monospace',
+                    fontSize: '14px',
+                    fontWeight: 'bold',
+                    letterSpacing: '0.12em',
+                    textTransform: 'uppercase',
+                    marginBottom: '8px'
+                  }}>Selected Customer Role</div>
+                  <div style={{
+                    padding: '16px',
+                    background: '#F5A62310',
+                    border: '1px solid #F5A623',
+                    color: '#F0EDE8',
+                    fontFamily: 'Courier New, Courier, monospace',
+                    fontSize: '16px',
+                    fontWeight: 'bold',
+                    letterSpacing: '0.12em'
+                  }}>
                     {role || 'Homeowner'}
-                    <div className="text-[11px] text-slate-400 mt-1 font-bold">
+                    <div style={{
+                      color: '#7A7570',
+                      fontSize: '14px',
+                      marginTop: '4px'
+                    }}>
                       Discount: {(({ 'Homeowner': 0, 'Architect': 5, 'Builder': 8, 'Dealer': 12 })[role] || 0)}%
                     </div>
                   </div>
                 </div>
+
+                {/* Allied Products */}
                 <div>
-                  <label className="block text-xs font-black uppercase text-slate-400 mb-5 tracking-widest">Allied Products</label>
-                  <div className="space-y-3">
+                  <div style={{
+                    color: '#7A7570',
+                    fontFamily: 'Courier New, Courier, monospace',
+                    fontSize: '14px',
+                    fontWeight: 'bold',
+                    letterSpacing: '0.12em',
+                    textTransform: 'uppercase',
+                    marginBottom: '16px'
+                  }}>Allied Products</div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                     {alliedProducts.map(product => (
-                      <label key={product.id} className="flex items-center gap-4 cursor-pointer group">
-                        <input type="checkbox" value={product.id} checked={formData.selectedAllied.includes(product.id)} onChange={handleInputChange} className="w-6 h-6 rounded-lg border-slate-600 bg-slate-800 text-amber-500 focus:ring-amber-500 cursor-pointer" />
-                        <span className="text-sm font-semibold text-slate-300 group-hover:text-white transition-colors">{product.name}</span>
+                      <label key={product.id} style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '12px',
+                        cursor: 'pointer'
+                      }}>
+                        <input 
+                          type="checkbox" 
+                          value={product.id} 
+                          checked={formData.selectedAllied.includes(product.id)} 
+                          onChange={handleInputChange}
+                          style={{
+                            width: '16px',
+                            height: '16px',
+                            accentColor: '#F5A623'
+                          }}
+                        />
+                        <span style={{
+                          color: '#7A7570',
+                          fontFamily: 'Courier New, Courier, monospace',
+                          fontSize: '15px',
+                          fontWeight: 'bold',
+                          letterSpacing: '0.12em'
+                        }}>{product.name}</span>
                       </label>
                     ))}
                   </div>
@@ -129,63 +302,503 @@ export default function EstimatePage() {
               </div>
             </div>
           </div>
-          <div className="flex-1">
-            <div className="bg-slate-900/70 backdrop-blur-sm rounded-[3rem] shadow-2xl overflow-hidden border border-slate-800 print:shadow-none print:border-none">
-              <div className="bg-gradient-to-r from-slate-900 to-slate-950 p-10 text-white flex flex-col md:flex-row justify-between items-start gap-6">
-                <div>
-                  <div className="text-3xl md:text-4xl font-black mb-3 tracking-tighter">GlassIQ Estimate</div>
-                  <p className="text-amber-400 text-sm font-bold uppercase tracking-widest">Architectural Glass Solution</p>
-                </div>
-                <div className="text-left md:text-right">
-                  <p className="text-xs text-slate-500 uppercase font-medium mb-1">Issue Date</p>
-                  <p className="font-bold text-lg">{currentDate || "--/--/----"}</p>
+
+          {/* Right Panel - Estimate Display */}
+          <div style={{ flex: 1 }}>
+            <div style={{
+              border: '1px solid #2A2A2A',
+              background: 'transparent',
+              overflow: 'hidden'
+            }}>
+              {/* Header */}
+              <div style={{
+                padding: '32px',
+                borderBottom: '1px solid #2A2A2A',
+                background: '#141414'
+              }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                  <div>
+                    <div style={{
+                      color: '#F0EDE8',
+                      fontFamily: 'Georgia, serif',
+                      fontSize: '36px',
+                      fontWeight: 'normal',
+                      lineHeight: '1.1',
+                      marginBottom: '8px'
+                    }}>AmalGus Estimate</div>
+                    <div style={{
+                      color: '#F5A623',
+                      fontFamily: 'Courier New, Courier, monospace',
+                      fontSize: '16px',
+                      fontWeight: 'bold',
+                      letterSpacing: '0.12em',
+                      textTransform: 'uppercase'
+                    }}>Architectural Glass Solution</div>
+                  </div>
+                  <div style={{ textAlign: 'right' }}>
+                    <div style={{
+                      color: '#7A7570',
+                      fontFamily: 'Courier New, Courier, monospace',
+                      fontSize: '14px',
+                      fontWeight: 'bold',
+                      letterSpacing: '0.12em',
+                      textTransform: 'uppercase',
+                      marginBottom: '4px'
+                    }}>Issue Date</div>
+                    <div style={{
+                      color: '#F0EDE8',
+                      fontFamily: 'Courier New, Courier, monospace',
+                      fontSize: '20px',
+                      fontWeight: 'bold',
+                      letterSpacing: '0.12em'
+                    }}>{currentDate || "--/--/----"}</div>
+                  </div>
                 </div>
               </div>
-              <div className="p-10 md:p-12 space-y-12">
-                <div className="overflow-x-auto no-scrollbar -mx-4 md:mx-0">
-                  <table className="w-full text-left min-w-[500px]">
-                    <thead><tr className="border-b-2 border-slate-700 text-[11px] font-black uppercase text-slate-400 tracking-widest"><th className="pb-5 md:px-0">Material Description</th><th className="pb-5 md:px-0">Qty</th><th className="pb-5 md:px-0">Rate (₹/sqft)</th><th className="pb-5 text-right md:px-0">Total (₹)</th></tr></thead>
-                    <tbody className="divide-y divide-slate-700">
-                      <tr className="group">
-                        <td className="py-7 md:px-0"><p className="font-black text-white text-lg md:text-xl">{selectedGlass?.name} Glass</p><p className="text-xs md:text-sm text-slate-400">{formData.width}mm x {formData.height}mm | {calculations?.totalSqft} sq.ft total</p><p className="text-xs md:text-sm text-slate-500 uppercase mt-1">Config: {selectedGlass?.thickness} • {selectedGlass?.process}</p></td>
-                        <td className="py-7 md:px-0 font-bold text-white text-lg">{formData.quantity}</td><td className="py-7 md:px-0 font-bold text-white text-lg">₹{calculations?.ratePerSqft}</td><td className="py-7 text-right md:px-0 font-black text-amber-400 text-xl md:text-2xl">₹{calculations?.basePrice}</td>
+
+              {/* Content */}
+              <div style={{ padding: '32px' }}>
+                {/* Materials Table */}
+                <div style={{ marginBottom: '48px', overflowX: 'auto' }}>
+                  <table style={{
+                    width: '100%',
+                    borderCollapse: 'collapse',
+                    minWidth: '600px'
+                  }}>
+                    <thead>
+                      <tr style={{ borderBottom: '2px solid #2A2A2A' }}>
+                        <th style={{
+                          padding: '16px 0',
+                          color: '#7A7570',
+                          fontFamily: 'Courier New, Courier, monospace',
+                          fontSize: '14px',
+                          fontWeight: 'bold',
+                          letterSpacing: '0.12em',
+                          textTransform: 'uppercase',
+                          textAlign: 'left'
+                        }}>Material Description</th>
+                        <th style={{
+                          padding: '16px 0',
+                          color: '#7A7570',
+                          fontFamily: 'Courier New, Courier, monospace',
+                          fontSize: '14px',
+                          fontWeight: 'bold',
+                          letterSpacing: '0.12em',
+                          textTransform: 'uppercase',
+                          textAlign: 'left'
+                        }}>Qty</th>
+                        <th style={{
+                          padding: '16px 0',
+                          color: '#7A7570',
+                          fontFamily: 'Courier New, Courier, monospace',
+                          fontSize: '14px',
+                          fontWeight: 'bold',
+                          letterSpacing: '0.12em',
+                          textTransform: 'uppercase',
+                          textAlign: 'left'
+                        }}>Rate (₹/sqft)</th>
+                        <th style={{
+                          padding: '16px 0',
+                          color: '#7A7570',
+                          fontFamily: 'Courier New, Courier, monospace',
+                          fontSize: '14px',
+                          fontWeight: 'bold',
+                          letterSpacing: '0.12em',
+                          textTransform: 'uppercase',
+                          textAlign: 'right'
+                        }}>Total (₹)</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style={{ borderBottom: '1px solid #2A2A2A' }}>
+                        <td style={{ padding: '20px 0' }}>
+                          <div style={{
+                            color: '#F0EDE8',
+                            fontFamily: 'Courier New, Courier, monospace',
+                            fontSize: '20px',
+                            fontWeight: 'bold',
+                            letterSpacing: '0.12em',
+                            marginBottom: '4px'
+                          }}>{selectedGlass?.name} Glass</div>
+                          <div style={{
+                            color: '#7A7570',
+                            fontFamily: 'Courier New, Courier, monospace',
+                            fontSize: '15px',
+                            letterSpacing: '0.12em',
+                            marginBottom: '4px'
+                          }}>{formData.width}mm x {formData.height}mm | {calculations?.totalSqft} sq.ft total</div>
+                          <div style={{
+                            color: '#4A4540',
+                            fontFamily: 'Courier New, Courier, monospace',
+                            fontSize: '14px',
+                            letterSpacing: '0.12em',
+                            textTransform: 'uppercase'
+                          }}>Config: {selectedGlass?.thickness} • {selectedGlass?.process}</div>
+                        </td>
+                        <td style={{ padding: '20px 0' }}>
+                          <div style={{
+                            color: '#F0EDE8',
+                            fontFamily: 'Courier New, Courier, monospace',
+                            fontSize: '20px',
+                            fontWeight: 'bold',
+                            letterSpacing: '0.12em'
+                          }}>{formData.quantity}</div>
+                        </td>
+                        <td style={{ padding: '20px 0' }}>
+                          <div style={{
+                            color: '#F0EDE8',
+                            fontFamily: 'Courier New, Courier, monospace',
+                            fontSize: '20px',
+                            fontWeight: 'bold',
+                            letterSpacing: '0.12em'
+                          }}>₹{calculations?.ratePerSqft}</div>
+                        </td>
+                        <td style={{ padding: '20px 0', textAlign: 'right' }}>
+                          <div style={{
+                            color: '#F5A623',
+                            fontFamily: 'Courier New, Courier, monospace',
+                            fontSize: '24px',
+                            fontWeight: 'bold',
+                            letterSpacing: '0.12em'
+                          }}>₹{calculations?.basePrice}</div>
+                        </td>
                       </tr>
                       {formData.selectedAllied.length > 0 && (
-                        <tr><td className="py-7 md:px-0" colSpan="3"><p className="font-bold text-white">Selected Allied Products</p><p className="text-xs text-slate-400">{formData.selectedAllied.map(id => alliedProducts.find(p => p.id === id)?.name).join(', ')}</p></td><td className="py-7 text-right md:px-0 font-bold text-white">₹{calculations?.alliedCost}</td></tr>
+                        <tr style={{ borderBottom: '1px solid #2A2A2A' }}>
+                          <td style={{ padding: '20px 0' }} colSpan="3">
+                            <div style={{
+                              color: '#F0EDE8',
+                              fontFamily: 'Courier New, Courier, monospace',
+                              fontSize: '18px',
+                              fontWeight: 'bold',
+                              letterSpacing: '0.12em',
+                              marginBottom: '4px'
+                            }}>Selected Allied Products</div>
+                            <div style={{
+                              color: '#7A7570',
+                              fontFamily: 'Courier New, Courier, monospace',
+                              fontSize: '15px',
+                              letterSpacing: '0.12em'
+                            }}>{formData.selectedAllied.map(id => alliedProducts.find(p => p.id === id)?.name).join(', ')}</div>
+                          </td>
+                          <td style={{ padding: '20px 0', textAlign: 'right' }}>
+                            <div style={{
+                              color: '#F0EDE8',
+                              fontFamily: 'Courier New, Courier, monospace',
+                              fontSize: '20px',
+                              fontWeight: 'bold',
+                              letterSpacing: '0.12em'
+                            }}>₹{calculations?.alliedCost}</div>
+                          </td>
+                        </tr>
                       )}
                     </tbody>
                   </table>
                 </div>
-                <div className="flex justify-end pt-10">
-                  <div className="w-full md:w-96 space-y-5">
-                    <div className="flex justify-between text-base text-slate-400"><span>Subtotal</span><span className="font-bold text-white">₹{calculations?.basePrice + (calculations?.alliedCost || 0)}</span></div>
-                    {calculations?.discountAmount > 0 && (
-                      <div className="flex justify-between text-base text-emerald-400 font-bold bg-emerald-500/10 px-5 py-3 rounded-xl"><span>{role || 'Homeowner'} Discount</span><span>- ₹{calculations?.discountAmount}</span></div>
-                    )}
-                    <div className="flex justify-between text-base text-slate-400 border-t border-slate-700 pt-5"><span>GST (18%)</span><span className="font-bold text-white">₹{calculations?.gst}</span></div>
-                    <div className="flex justify-between text-3xl font-black text-white border-t-2 border-amber-500/30 pt-6"><span>Grand Total</span><span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-orange-400 to-yellow-400">₹{calculations?.total}</span></div>
+
+                {/* Pricing Summary */}
+                <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '48px' }}>
+                  <div style={{ width: '400px' }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <span style={{
+                          color: '#7A7570',
+                          fontFamily: 'Courier New, Courier, monospace',
+                          fontSize: '18px',
+                          letterSpacing: '0.12em'
+                        }}>Subtotal</span>
+                        <span style={{
+                          color: '#F0EDE8',
+                          fontFamily: 'Courier New, Courier, monospace',
+                          fontSize: '18px',
+                          fontWeight: 'bold',
+                          letterSpacing: '0.12em'
+                        }}>₹{calculations?.basePrice + (calculations?.alliedCost || 0)}</span>
+                      </div>
+                      
+                      {calculations?.discountAmount > 0 && (
+                        <div style={{
+                          display: 'flex',
+                          justifyContent: 'space-between',
+                          alignItems: 'center',
+                          padding: '12px 16px',
+                          background: '#3ECA7A10',
+                          border: '1px solid #3ECA7A'
+                        }}>
+                          <span style={{
+                            color: '#3ECA7A',
+                            fontFamily: 'Courier New, Courier, monospace',
+                            fontSize: '16px',
+                            fontWeight: 'bold',
+                            letterSpacing: '0.12em',
+                            textTransform: 'uppercase'
+                          }}>{role || 'Homeowner'} Discount</span>
+                          <span style={{
+                            color: '#3ECA7A',
+                            fontFamily: 'Courier New, Courier, monospace',
+                            fontSize: '18px',
+                            fontWeight: 'bold',
+                            letterSpacing: '0.12em'
+                          }}>- ₹{calculations?.discountAmount}</span>
+                        </div>
+                      )}
+                      
+                      <div style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        paddingTop: '16px',
+                        borderTop: '1px solid #2A2A2A'
+                      }}>
+                        <span style={{
+                          color: '#7A7570',
+                          fontFamily: 'Courier New, Courier, monospace',
+                          fontSize: '18px',
+                          letterSpacing: '0.12em'
+                        }}>GST (18%)</span>
+                        <span style={{
+                          color: '#F0EDE8',
+                          fontFamily: 'Courier New, Courier, monospace',
+                          fontSize: '18px',
+                          fontWeight: 'bold',
+                          letterSpacing: '0.12em'
+                        }}>₹{calculations?.gst}</span>
+                      </div>
+                      
+                      <div style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        paddingTop: '24px',
+                        borderTop: '2px solid #F5A62330'
+                      }}>
+                        <span style={{
+                          color: '#F0EDE8',
+                          fontFamily: 'Courier New, Courier, monospace',
+                          fontSize: '24px',
+                          fontWeight: 'bold',
+                          letterSpacing: '0.12em'
+                        }}>Grand Total</span>
+                        <span style={{
+                          color: '#F5A623',
+                          fontFamily: 'Courier New, Courier, monospace',
+                          fontSize: '32px',
+                          fontWeight: 'bold',
+                          letterSpacing: '0.12em'
+                        }}>₹{calculations?.total}</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <div className="bg-slate-800/30 p-6 rounded-2xl border border-slate-700"><p className="text-xs text-slate-400 font-black uppercase tracking-widest mb-2">Legal Disclaimer</p><p className="text-sm text-slate-500 italic">Rates are indicative and subject to change based on actual site measurements. Final quote issued by vendor after physical inspection.</p></div>
-                <div className="flex flex-col sm:flex-row gap-5 pt-12 print:hidden">
-                  <button onClick={handlePrint} className="flex-1 bg-slate-800 text-white border-2 border-slate-700 px-8 py-5 rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-slate-700 hover:border-slate-600 transition-all flex items-center justify-center gap-3">Download Estimate</button>
-                  <button onClick={() => setShowModal(true)} className="flex-1 bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 px-8 py-5 rounded-2xl font-black uppercase tracking-widest text-xs hover:from-amber-400 hover:to-orange-400 transition-all shadow-lg flex items-center justify-center gap-3">Request Formal Quote</button>
+
+                {/* Disclaimer */}
+                <div style={{
+                  padding: '24px',
+                  background: '#141414',
+                  border: '1px solid #2A2A2A',
+                  marginBottom: '48px'
+                }}>
+                  <div style={{
+                    color: '#7A7570',
+                    fontFamily: 'Courier New, Courier, monospace',
+                    fontSize: '14px',
+                    fontWeight: 'bold',
+                    letterSpacing: '0.12em',
+                    textTransform: 'uppercase',
+                    marginBottom: '8px'
+                  }}>Legal Disclaimer</div>
+                  <p style={{
+                    color: '#7A7570',
+                    fontFamily: 'Courier New, Courier, monospace',
+                    fontSize: '15px',
+                    letterSpacing: '0.12em',
+                    lineHeight: '1.5',
+                    margin: 0,
+                    fontStyle: 'italic'
+                  }}>
+                    Rates are indicative and subject to change based on actual site measurements. Final quote issued by vendor after physical inspection.
+                  </p>
+                </div>
+
+                {/* Action Buttons */}
+                <div style={{ display: 'flex', gap: '16px' }} className="print:hidden">
+                  <button 
+                    onClick={handlePrint}
+                    style={{
+                      flex: 1,
+                      padding: '16px',
+                      background: 'transparent',
+                      color: '#7A7570',
+                      border: '1px solid #2A2A2A',
+                      fontFamily: 'Courier New, Courier, monospace',
+                      fontSize: '16px',
+                      fontWeight: 'bold',
+                      letterSpacing: '0.12em',
+                      cursor: 'pointer',
+                      textTransform: 'uppercase'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.target.style.background = '#141414';
+                      e.target.style.color = '#F0EDE8';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.target.style.background = 'transparent';
+                      e.target.style.color = '#7A7570';
+                    }}
+                  >
+                    Download Estimate
+                  </button>
+                  <button 
+                    onClick={() => setShowModal(true)}
+                    style={{
+                      flex: 1,
+                      padding: '16px',
+                      background: '#F5A623',
+                      color: '#0C0C0C',
+                      border: 'none',
+                      fontFamily: 'Courier New, Courier, monospace',
+                      fontSize: '16px',
+                      fontWeight: 'bold',
+                      letterSpacing: '0.12em',
+                      cursor: 'pointer',
+                      textTransform: 'uppercase'
+                    }}
+                  >
+                    Request Formal Quote
+                  </button>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+
+      {/* Quote Request Modal */}
       {showModal && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-          <div className="absolute inset-0 bg-slate-950/80 backdrop-blur-xl" onClick={() => setShowModal(false)}></div>
-          <div className="bg-slate-900 rounded-[2.5rem] p-10 max-w-md w-full relative z-10 shadow-2xl border border-slate-800">
-            <h3 className="text-3xl font-black text-white mb-4">Finalize Quote</h3>
-            <p className="text-slate-400 mb-10">Enter your details for our expert to schedule a site measurement.</p>
-            <form className="space-y-6" onSubmit={(e) => { e.preventDefault(); showToast("Formal request sent to 3 local factories!"); setShowModal(false); }}>
-              <div><label className="block text-xs font-black uppercase text-slate-500 mb-3 tracking-widest">Full Name</label><input required className="w-full p-5 bg-slate-800 rounded-xl border border-slate-700 outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500/50 font-bold text-white placeholder-slate-600" /></div>
-              <div><label className="block text-xs font-black uppercase text-slate-500 mb-3 tracking-widest">WhatsApp Number</label><input required className="w-full p-5 bg-slate-800 rounded-xl border border-slate-700 outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500/50 font-bold text-white placeholder-slate-600" /></div>
-              <button type="submit" className="w-full bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 py-5 rounded-2xl font-black uppercase tracking-widest text-base hover:from-amber-400 hover:to-orange-400 shadow-xl">Send Fast Request</button>
+        <div style={{
+          position: 'fixed',
+          inset: 0,
+          zIndex: 100,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: '16px',
+          background: 'rgba(0,0,0,0.92)',
+          backdropFilter: 'blur(8px)'
+        }}>
+          <div 
+            style={{
+              position: 'absolute',
+              inset: 0,
+              background: 'transparent'
+            }}
+            onClick={() => setShowModal(false)}
+          ></div>
+          <div style={{
+            background: '#141414',
+            border: '1px solid #2A2A2A',
+            padding: '40px',
+            maxWidth: '500px',
+            width: '100%',
+            position: 'relative',
+            zIndex: 10
+          }}>
+            <h3 style={{
+              color: '#F0EDE8',
+              fontFamily: 'Courier New, Courier, monospace',
+              fontSize: '24px',
+              fontWeight: 'bold',
+              letterSpacing: '0.12em',
+              marginBottom: '16px'
+            }}>Finalize Quote</h3>
+            <p style={{
+              color: '#7A7570',
+              fontFamily: 'Courier New, Courier, monospace',
+              fontSize: '16px',
+              letterSpacing: '0.12em',
+              lineHeight: '1.5',
+              marginBottom: '32px'
+            }}>
+              Enter your details for our expert to schedule a site measurement.
+            </p>
+            <form 
+              onSubmit={(e) => { 
+                e.preventDefault(); 
+                showToast("Formal request sent to 3 local factories!"); 
+                setShowModal(false); 
+              }}
+              style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}
+            >
+              <div>
+                <div style={{
+                  color: '#7A7570',
+                  fontFamily: 'Courier New, Courier, monospace',
+                  fontSize: '14px',
+                  fontWeight: 'bold',
+                  letterSpacing: '0.12em',
+                  textTransform: 'uppercase',
+                  marginBottom: '8px'
+                }}>Full Name</div>
+                <input 
+                  required 
+                  style={{
+                    width: '100%',
+                    padding: '16px',
+                    background: '#0C0C0C',
+                    border: '1px solid #2A2A2A',
+                    color: '#F0EDE8',
+                    fontFamily: 'Courier New, Courier, monospace',
+                    fontSize: '16px',
+                    fontWeight: 'bold',
+                    letterSpacing: '0.12em',
+                    outline: 'none'
+                  }}
+                />
+              </div>
+              <div>
+                <div style={{
+                  color: '#7A7570',
+                  fontFamily: 'Courier New, Courier, monospace',
+                  fontSize: '14px',
+                  fontWeight: 'bold',
+                  letterSpacing: '0.12em',
+                  textTransform: 'uppercase',
+                  marginBottom: '8px'
+                }}>WhatsApp Number</div>
+                <input 
+                  required 
+                  style={{
+                    width: '100%',
+                    padding: '16px',
+                    background: '#0C0C0C',
+                    border: '1px solid #2A2A2A',
+                    color: '#F0EDE8',
+                    fontFamily: 'Courier New, Courier, monospace',
+                    fontSize: '16px',
+                    fontWeight: 'bold',
+                    letterSpacing: '0.12em',
+                    outline: 'none'
+                  }}
+                />
+              </div>
+              <button 
+                type="submit"
+                style={{
+                  width: '100%',
+                  padding: '20px',
+                  background: '#F5A623',
+                  color: '#0C0C0C',
+                  border: 'none',
+                  fontFamily: 'Courier New, Courier, monospace',
+                  fontSize: '18px',
+                  fontWeight: 'bold',
+                  letterSpacing: '0.12em',
+                  cursor: 'pointer',
+                  textTransform: 'uppercase'
+                }}
+              >
+                Send Fast Request
+              </button>
             </form>
           </div>
         </div>

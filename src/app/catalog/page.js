@@ -50,185 +50,427 @@ function CatalogContent() {
     }));
   };
 
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-
   return (
-    <div className="min-h-screen bg-slate-950 text-white pt-24">
-      <div className="max-w-[1440px] mx-auto px-6">
+    <div style={{ minHeight: '100vh', background: '#0C0C0C', paddingTop: '28px' }}>
+      <div style={{ maxWidth: '1440px', margin: '0 auto', padding: '0 24px' }}>
         
-        <div className="mb-16">
-          <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-6xl font-black mb-6">
-              Glass Products <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-orange-400 to-yellow-400">Catalog</span>
+        {/* Header Section */}
+        <div style={{ marginBottom: '80px', paddingTop: '48px' }}>
+          <div style={{ textAlign: 'center', marginBottom: '48px' }}>
+            <h1 style={{
+              fontFamily: 'Georgia, serif',
+              fontSize: 'clamp(42px, 7vw, 84px)',
+              fontWeight: 'normal',
+              lineHeight: '1.1',
+              color: '#F0EDE8',
+              margin: '0 0 16px 0'
+            }}>
+              PRODUCT<br/>
+              <span style={{ color: '#F5A623' }}>CATALOG</span>
             </h1>
-            <p className="text-slate-400 text-lg max-w-2xl mx-auto">
-              Discover our complete range of architectural glass solutions for every project need
+            <div style={{
+              width: '60px',
+              height: '2px',
+              background: '#F5A623',
+              margin: '0 auto 24px auto'
+            }}></div>
+            <p style={{
+              color: '#7A7570',
+              fontFamily: "'Courier New', Courier, monospace",
+              fontSize: '18px',
+              letterSpacing: '0.12em',
+              maxWidth: '600px',
+              margin: '0 auto'
+            }}>
+              COMPLETE ARCHITECTURAL GLASS SOLUTIONS · TECHNICAL SPECIFICATIONS · LIVE PRICING
             </p>
           </div>
           
-          <div className="relative max-w-3xl mx-auto">
-            <div className="absolute inset-y-0 left-6 flex items-center text-slate-500">
-              <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-              </svg>
+          {/* Search Bar */}
+          <div style={{
+            maxWidth: '800px',
+            margin: '0 auto',
+            border: '1px solid #2A2A2A',
+            display: 'flex',
+            alignItems: 'stretch'
+          }}>
+            <div style={{
+              padding: '16px',
+              borderRight: '1px solid #2A2A2A',
+              background: '#141414',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px'
+            }}>
+              <span style={{
+                color: '#F5A623',
+                fontFamily: "'Courier New', Courier, monospace",
+                fontSize: '16px',
+                fontWeight: 'bold',
+                letterSpacing: '0.12em'
+              }}>SEARCH</span>
             </div>
-            <input 
-              type="text" 
-              placeholder="Search glass types or tags..." 
-              className="w-full pl-20 pr-8 py-6 bg-slate-900/50 border border-slate-700 rounded-3xl outline-none focus:ring-4 focus:ring-amber-500/20 focus:border-amber-500/50 text-white placeholder-slate-500 text-lg transition-all"
+            <input
+              type="text"
+              placeholder="Filter by type, thickness, or application..."
+              style={{
+                flex: 1,
+                padding: '16px',
+                background: 'transparent',
+                border: 'none',
+                color: '#F0EDE8',
+                fontFamily: "'Courier New', Courier, monospace",
+                fontSize: '18px',
+                outline: 'none'
+              }}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
         </div>
 
-        <div className="flex flex-col lg:flex-row gap-12 pb-24">
-          <aside className="lg:w-80 space-y-10">
-            <div className="bg-slate-900/30 rounded-3xl p-8 border border-slate-800">
-              <h3 className="text-lg font-black text-white mb-8 uppercase tracking-widest text-sm">Filters</h3>
+        <div style={{ display: 'flex', gap: '48px', marginBottom: '80px' }}>
+          {/* Filters Sidebar */}
+          <aside style={{ width: '320px', flexShrink: 0 }}>
+            <div style={{
+              border: '1px solid #2A2A2A',
+              padding: '32px',
+              marginBottom: '32px'
+            }}>
+              <h3 style={{
+                color: '#F0EDE8',
+                fontFamily: "'Courier New', Courier, monospace",
+                fontSize: '18px',
+                fontWeight: 'bold',
+                letterSpacing: '0.12em',
+                marginBottom: '24px',
+                textTransform: 'uppercase'
+              }}>FILTERS</h3>
               
-              <div className="mb-10">
-                <h4 className="text-sm font-bold text-slate-300 mb-5">Glass Type</h4>
-                <div className="space-y-3">
-                  {glassProducts.map(p => (
+              {/* Glass Type Filter */}
+              <div style={{ marginBottom: '32px' }}>
+                <h4 style={{
+                  color: '#7A7570',
+                  fontFamily: "'Courier New', Courier, monospace",
+                  fontSize: '15px',
+                  fontWeight: 'bold',
+                  letterSpacing: '0.12em',
+                  marginBottom: '16px',
+                  textTransform: 'uppercase'
+                }}>Glass Type</h4>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                  {[...new Set(glassProducts.map(p => p.name))].map(type => (
                     <button
-                      key={p.id}
-                      onClick={() => toggleFilter('type', p.name)}
-                      className={`w-full text-left px-4 py-3 rounded-xl text-sm font-semibold transition-all ${
-                        filters.type === p.name 
-                          ? 'bg-amber-500/20 text-amber-400 border border-amber-500/30' 
-                          : 'text-slate-400 hover:bg-slate-800/50 border border-transparent'
-                      }`}
+                      key={type}
+                      onClick={() => toggleFilter('type', type)}
+                      style={{
+                        padding: '12px 16px',
+                        border: `1px solid ${filters.type === type ? '#F5A623' : '#2A2A2A'}`,
+                        background: filters.type === type ? '#F5A62320' : 'transparent',
+                        color: filters.type === type ? '#F5A623' : '#7A7570',
+                        fontFamily: "'Courier New', Courier, monospace",
+                        fontSize: '15px',
+                        fontWeight: 'bold',
+                        letterSpacing: '0.12em',
+                        textAlign: 'left',
+                        cursor: 'pointer',
+                        textTransform: 'uppercase'
+                      }}
                     >
-                      {p.name}
+                      {type}
                     </button>
                   ))}
                 </div>
               </div>
 
-              <div className="mb-10">
-                <h4 className="text-sm font-bold text-slate-300 mb-5">Thickness</h4>
-                <div className="space-y-3">
-                  {uniqueThickness.map(t => (
+              {/* Thickness Filter */}
+              <div style={{ marginBottom: '32px' }}>
+                <h4 style={{
+                  color: '#7A7570',
+                  fontFamily: "'Courier New', Courier, monospace",
+                  fontSize: '15px',
+                  fontWeight: 'bold',
+                  letterSpacing: '0.12em',
+                  marginBottom: '16px',
+                  textTransform: 'uppercase'
+                }}>Thickness</h4>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                  {uniqueThickness.map(thickness => (
                     <button
-                      key={t}
-                      onClick={() => toggleFilter('thickness', t)}
-                      className={`w-full text-left px-4 py-3 rounded-xl text-sm font-semibold transition-all ${
-                        filters.thickness === t 
-                          ? 'bg-amber-500/20 text-amber-400 border border-amber-500/30' 
-                          : 'text-slate-400 hover:bg-slate-800/50 border border-transparent'
-                      }`}
+                      key={thickness}
+                      onClick={() => toggleFilter('thickness', thickness)}
+                      style={{
+                        padding: '12px 16px',
+                        border: `1px solid ${filters.thickness === thickness ? '#F5A623' : '#2A2A2A'}`,
+                        background: filters.thickness === thickness ? '#F5A62320' : 'transparent',
+                        color: filters.thickness === thickness ? '#F5A623' : '#7A7570',
+                        fontFamily: "'Courier New', Courier, monospace",
+                        fontSize: '15px',
+                        fontWeight: 'bold',
+                        letterSpacing: '0.12em',
+                        textAlign: 'left',
+                        cursor: 'pointer'
+                      }}
                     >
-                      {t}
+                      {thickness}
                     </button>
                   ))}
                 </div>
               </div>
 
+              {/* Application Filter */}
               <div>
-                <h4 className="text-sm font-bold text-slate-300 mb-5">Application</h4>
-                <div className="space-y-3">
-                  {uniqueApplications.map(a => (
+                <h4 style={{
+                  color: '#7A7570',
+                  fontFamily: "'Courier New', Courier, monospace",
+                  fontSize: '15px',
+                  fontWeight: 'bold',
+                  letterSpacing: '0.12em',
+                  marginBottom: '16px',
+                  textTransform: 'uppercase'
+                }}>Application</h4>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                  {uniqueApplications.map(app => (
                     <button
-                      key={a}
-                      onClick={() => toggleFilter('application', a)}
-                      className={`w-full text-left px-4 py-3 rounded-xl text-sm font-semibold transition-all ${
-                        filters.application === a 
-                          ? 'bg-amber-500/20 text-amber-400 border border-amber-500/30' 
-                          : 'text-slate-400 hover:bg-slate-800/50 border border-transparent'
-                      }`}
+                      key={app}
+                      onClick={() => toggleFilter('application', app)}
+                      style={{
+                        padding: '12px 16px',
+                        border: `1px solid ${filters.application === app ? '#F5A623' : '#2A2A2A'}`,
+                        background: filters.application === app ? '#F5A62320' : 'transparent',
+                        color: filters.application === app ? '#F5A623' : '#7A7570',
+                        fontFamily: "'Courier New', Courier, monospace",
+                        fontSize: '15px',
+                        fontWeight: 'bold',
+                        letterSpacing: '0.12em',
+                        textAlign: 'left',
+                        cursor: 'pointer'
+                      }}
                     >
-                      {a}
+                      {app}
                     </button>
                   ))}
                 </div>
               </div>
             </div>
 
-            <div className="bg-gradient-to-br from-amber-500/10 via-orange-500/10 to-transparent rounded-3xl p-8 border border-amber-500/20">
-              <h4 className="font-bold text-white text-xl mb-3">Need Help?</h4>
-              <p className="text-sm text-slate-400 mb-6">
-                Our technical experts are available 9am-6pm IST to guide you.
+            {/* Help Box */}
+            <div style={{
+              border: '1px solid #F5A623',
+              padding: '32px',
+              background: '#F5A62310'
+            }}>
+              <h4 style={{
+                color: '#F0EDE8',
+                fontFamily: "'Courier New', Courier, monospace",
+                fontSize: '18px',
+                fontWeight: 'bold',
+                letterSpacing: '0.12em',
+                marginBottom: '16px'
+              }}>NEED ASSISTANCE?</h4>
+              <p style={{
+                color: '#7A7570',
+                fontFamily: "'Courier New', Courier, monospace",
+                fontSize: '15px',
+                letterSpacing: '0.12em',
+                lineHeight: '1.5',
+                marginBottom: '24px'
+              }}>
+                Technical experts available 9AM-6PM IST for product guidance and specifications.
               </p>
-              <button 
-                onClick={() => showToast("Callback scheduled! Our expert will call between 9am-6pm IST.")} 
-                className="w-full bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 py-4 rounded-xl font-bold text-sm hover:from-amber-400 hover:to-orange-400 transition-all shadow-lg"
+              <button
+                onClick={() => showToast("Callback scheduled! Our expert will call between 9am-6pm IST.")}
+                style={{
+                  width: '100%',
+                  padding: '16px',
+                  background: '#F5A623',
+                  color: '#0C0C0C',
+                  border: 'none',
+                  fontFamily: "'Courier New', Courier, monospace",
+                  fontSize: '15px',
+                  fontWeight: 'bold',
+                  letterSpacing: '0.12em',
+                  cursor: 'pointer',
+                  textTransform: 'uppercase'
+                }}
               >
-                Request Callback
+                REQUEST CALLBACK
               </button>
             </div>
           </aside>
 
-          <main className="flex-1">
-            <div className="flex justify-between items-center mb-10">
-              <p className="text-slate-400 font-semibold">
-                {isLoading ? "Loading products..." : (
+          {/* Products Grid */}
+          <main style={{ flex: 1 }}>
+            {/* Results Header */}
+            <div style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              marginBottom: '32px',
+              paddingBottom: '16px',
+              borderBottom: '1px solid #2A2A2A'
+            }}>
+              <div style={{
+                color: '#7A7570',
+                fontFamily: "'Courier New', Courier, monospace",
+                fontSize: '16px',
+                letterSpacing: '0.12em'
+              }}>
+                {isLoading ? "LOADING PRODUCTS..." : (
                   <span>
-                    Showing <span className="text-white font-black">{filteredProducts.length}</span> results
+                    <span style={{ color: '#F0EDE8', fontWeight: 'bold' }}>{filteredProducts.length}</span> PRODUCTS FOUND
                   </span>
                 )}
-              </p>
+              </div>
               {(filters.type || filters.thickness || filters.application) && (
-                <button 
+                <button
                   onClick={() => setFilters({ type: "", thickness: "", application: "" })}
-                  className="px-5 py-2.5 bg-slate-800 text-slate-300 rounded-xl text-sm font-semibold hover:bg-slate-700 transition-all"
+                  style={{
+                    padding: '8px 16px',
+                    border: '1px solid #2A2A2A',
+                    background: 'transparent',
+                    color: '#7A7570',
+                    fontFamily: "'Courier New', Courier, monospace",
+                    fontSize: '14px',
+                    fontWeight: 'bold',
+                    letterSpacing: '0.12em',
+                    cursor: 'pointer',
+                    textTransform: 'uppercase'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.target.style.background = '#141414';
+                    e.target.style.color = '#F0EDE8';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.target.style.background = 'transparent';
+                    e.target.style.color = '#7A7570';
+                  }}
                 >
-                  Clear Filters
+                  CLEAR FILTERS
                 </button>
               )}
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+            {/* Products Grid */}
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(3, 1fr)',
+              gap: '0px',
+              border: '1px solid #2A2A2A',
+              borderTop: 'none'
+            }}>
               {isLoading ? (
                 [...Array(6)].map((_, i) => (
-                  <div key={i} className="bg-slate-900/30 rounded-3xl h-[400px] border border-slate-800 animate-pulse"></div>
+                  <div
+                    key={i}
+                    style={{
+                      padding: '32px 24px',
+                      borderRight: (i + 1) % 3 !== 0 ? '1px solid #2A2A2A' : 'none',
+                      borderBottom: '1px solid #2A2A2A',
+                      height: '320px',
+                      background: '#141414',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center'
+                    }}
+                  >
+                    <div style={{
+                      color: '#4A4540',
+                      fontFamily: "'Courier New', Courier, monospace",
+                      fontSize: '15px',
+                      letterSpacing: '0.12em'
+                    }}>LOADING...</div>
+                  </div>
                 ))
               ) : filteredProducts.length > 0 ? (
-                filteredProducts.map((p) => (
-                  <Link 
-                    key={p.id} 
+                filteredProducts.map((p, i) => (
+                  <Link
+                    key={p.id}
                     href={`/catalog/${p.id}`}
-                    className="group relative bg-slate-900/30 rounded-3xl overflow-hidden border border-slate-800 hover:border-amber-500/50 transition-all duration-500"
+                    style={{
+                      padding: '32px 24px',
+                      borderRight: (i + 1) % 3 !== 0 ? '1px solid #2A2A2A' : 'none',
+                      borderBottom: '1px solid #2A2A2A',
+                      display: 'block',
+                      textDecoration: 'none',
+                      position: 'relative',
+                      background: 'transparent'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.target.style.background = '#141414';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.target.style.background = 'transparent';
+                    }}
                   >
-                    <div className="absolute inset-0 bg-gradient-to-br from-amber-500/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    {/* Icon */}
+                    <div style={{
+                      fontSize: '52px',
+                      marginBottom: '20px',
+                      filter: 'grayscale(100%) contrast(0.5)'
+                    }}>{p.imageIcon}</div>
                     
-                    <div className="aspect-[4/3] bg-slate-800/50 flex items-center justify-center text-7xl group-hover:scale-105 transition-transform duration-300">
-                      {p.imageIcon}
-                    </div>
+                    {/* Product Name */}
+                    <h3 style={{
+                      color: '#F0EDE8',
+                      fontFamily: "'Courier New', Courier, monospace",
+                      fontSize: '20px',
+                      fontWeight: 'bold',
+                      letterSpacing: '0.12em',
+                      marginBottom: '12px',
+                      textTransform: 'uppercase'
+                    }}>{p.name}</h3>
                     
-                    <div className="p-8">
-                      <h3 className="text-2xl font-black text-white mb-3 group-hover:text-amber-400 transition-colors">
-                        {p.name}
-                      </h3>
-                      <p className="text-xs text-slate-500 font-black uppercase tracking-widest mb-5">
-                        {p.thickness} • {p.process}
-                      </p>
-                      <p className="text-slate-400 mb-8">
-                        Best for: {p.application}
-                      </p>
-                      
-                      <div className="flex items-center justify-between pt-6 border-t border-slate-800">
-                        <div>
-                          <span className="text-xs text-slate-500 font-bold uppercase block mb-1">
-                            Market Rate
-                          </span>
-                          <span className="text-2xl font-black text-amber-400 italic">
-                            ₹{p.priceMin} - {p.priceMax}
-                          </span>
-                        </div>
-                        
-                        <div className="px-5 py-3 bg-slate-800 text-white rounded-xl font-bold text-sm group-hover:bg-gradient-to-r group-hover:from-amber-500 group-hover:to-orange-500 group-hover:text-slate-950 transition-all">
-                          View Details
-                        </div>
-                      </div>
+                    {/* Specs */}
+                    <div style={{
+                      color: '#7A7570',
+                      fontFamily: "'Courier New', Courier, monospace",
+                      fontSize: '14px',
+                      letterSpacing: '0.12em',
+                      marginBottom: '8px'
+                    }}>{p.thickness} • {p.process}</div>
+                    
+                    {/* Application */}
+                    <div style={{
+                      color: '#4A4540',
+                      fontFamily: "'Courier New', Courier, monospace",
+                      fontSize: '14px',
+                      letterSpacing: '0.12em',
+                      marginBottom: '16px'
+                    }}>{p.application}</div>
+                    
+                    {/* Price */}
+                    <div style={{
+                      color: '#F5A623',
+                      fontFamily: "'Courier New', Courier, monospace",
+                      fontSize: '22px',
+                      fontWeight: 'bold',
+                      letterSpacing: '0.12em'
+                    }}>
+                      ₹{p.priceMin}-{p.priceMax}
                     </div>
                   </Link>
                 ))
               ) : (
-                <div className="col-span-full text-center py-24">
-                  <div className="text-6xl mb-6">🔍</div>
-                  <h3 className="text-2xl font-bold text-white mb-3">No products found</h3>
-                  <p className="text-slate-400">Try adjusting your filters or search query</p>
+                <div style={{
+                  gridColumn: '1 / -1',
+                  padding: '80px 24px',
+                  textAlign: 'center',
+                  borderBottom: '1px solid #2A2A2A'
+                }}>
+                  <div style={{
+                    color: '#4A4540',
+                    fontFamily: "'Courier New', Courier, monospace",
+                    fontSize: '18px',
+                    letterSpacing: '0.12em',
+                    marginBottom: '16px'
+                  }}>NO PRODUCTS FOUND</div>
+                  <div style={{
+                    color: '#7A7570',
+                    fontFamily: "'Courier New', Courier, monospace",
+                    fontSize: '15px',
+                    letterSpacing: '0.12em'
+                  }}>ADJUST FILTERS OR SEARCH QUERY</div>
                 </div>
               )}
             </div>
@@ -242,8 +484,13 @@ function CatalogContent() {
 export default function CatalogPage() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen bg-slate-950 pt-24 text-center">
-        <div className="text-2xl font-semibold text-slate-400">Loading Catalog...</div>
+      <div style={{ minHeight: '100vh', background: '#0C0C0C', paddingTop: '28px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{
+          color: '#7A7570',
+          fontFamily: "'Courier New', Courier, monospace",
+          fontSize: '18px',
+          letterSpacing: '0.12em'
+        }}>LOADING CATALOG...</div>
       </div>
     }>
       <CatalogContent />

@@ -1,3 +1,5 @@
+"use client";
+import { use } from 'react';
 import Link from 'next/link';
 import { glassProducts } from '@/data/glassProducts';
 import { alliedProducts } from '@/data/alliedProducts';
@@ -5,8 +7,9 @@ import { vendors } from '@/data/vendors';
 import { notFound } from 'next/navigation';
 import VendorComparison from '@/components/VendorComparison';
 
-export default async function ProductDetailPage({ params }) {
-  const { id } = await params;
+export default function ProductDetailPage({ params }) {
+  const resolvedParams = use(params);
+  const { id } = resolvedParams;
   const product = glassProducts.find(p => p.id === parseInt(id));
   
   if (!product) {
@@ -19,88 +22,328 @@ export default async function ProductDetailPage({ params }) {
   ).slice(0, 4);
 
   return (
-    <div className="bg-gray-50 min-h-screen pt-24 pb-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div style={{ minHeight: '100vh', background: '#0C0C0C', paddingTop: '28px', paddingBottom: '80px' }}>
+      <div style={{ maxWidth: '1440px', margin: '0 auto', padding: '0 24px' }}>
         
         {/* Breadcrumbs */}
-        <nav className="flex items-center gap-2 text-sm text-gray-500 mb-12">
-          <Link href="/" className="hover:text-navy transition-colors">Home</Link>
-          <span>/</span>
-          <Link href="/catalog" className="hover:text-navy transition-colors">Catalog</Link>
-          <span>/</span>
-          <span className="text-navy font-bold">{product.name}</span>
+        <nav style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '8px',
+          marginBottom: '48px',
+          padding: '16px 0',
+          borderBottom: '1px solid #2A2A2A'
+        }}>
+          <Link 
+            href="/" 
+            style={{
+              color: '#7A7570',
+              fontFamily: "'Courier New', Courier, monospace",
+              fontSize: '15px',
+              fontWeight: 'bold',
+              letterSpacing: '0.12em',
+              textDecoration: 'none'
+            }}
+          >HOME</Link>
+          <span style={{ color: '#4A4540' }}>⬥</span>
+          <Link 
+            href="/catalog" 
+            style={{
+              color: '#7A7570',
+              fontFamily: "'Courier New', Courier, monospace",
+              fontSize: '15px',
+              fontWeight: 'bold',
+              letterSpacing: '0.12em',
+              textDecoration: 'none'
+            }}
+          >CATALOG</Link>
+          <span style={{ color: '#4A4540' }}>⬥</span>
+          <span style={{
+            color: '#F0EDE8',
+            fontFamily: "'Courier New', Courier, monospace",
+            fontSize: '15px',
+            fontWeight: 'bold',
+            letterSpacing: '0.12em'
+          }}>{product.name}</span>
         </nav>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '80px', marginBottom: '120px' }}>
           
-          {/* Product Image/Visual Section */}
+          {/* Product Visual Section */}
           <div>
-            <div className="aspect-square bg-white rounded-[40px] shadow-xl border border-gray-100 flex items-center justify-center text-[10rem] sticky top-32 ring-1 ring-gray-200">
+            <div style={{
+              aspectRatio: '1/1',
+              border: '1px solid #2A2A2A',
+              background: '#141414',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: '164px',
+              position: 'sticky',
+              top: '80px'
+            }}>
               {product.imageIcon}
-              <div className="absolute bottom-8 right-8">
-                <span className="bg-navy text-white px-6 py-2 rounded-full font-bold text-sm tracking-widest uppercase">
-                  Verified Grade
-                </span>
+              <div style={{
+                position: 'absolute',
+                bottom: '24px',
+                right: '24px'
+              }}>
+                <span style={{
+                  padding: '8px 16px',
+                  background: '#3ECA7A20',
+                  border: '1px solid #3ECA7A',
+                  color: '#3ECA7A',
+                  fontFamily: "'Courier New', Courier, monospace",
+                  fontSize: '14px',
+                  fontWeight: 'bold',
+                  letterSpacing: '0.12em',
+                  textTransform: 'uppercase'
+                }}>VERIFIED GRADE</span>
               </div>
             </div>
           </div>
 
           {/* Product Info Section */}
-          <div className="space-y-12">
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '48px' }}>
+            {/* Header */}
             <div>
-              <div className="inline-flex items-center px-4 py-1 rounded-full bg-amber/10 text-amber text-xs font-black uppercase tracking-widest mb-6">
-                Category: Architectural Glass
-              </div>
-              <h1 className="text-5xl font-black text-navy mb-4">{product.name} Glass</h1>
-              <p className="text-xl text-gray-500 leading-relaxed">
+              <div style={{
+                display: 'inline-block',
+                padding: '8px 16px',
+                background: '#F5A62320',
+                border: '1px solid #F5A623',
+                color: '#F5A623',
+                fontFamily: "'Courier New', Courier, monospace",
+                fontSize: '14px',
+                fontWeight: 'bold',
+                letterSpacing: '0.12em',
+                textTransform: 'uppercase',
+                marginBottom: '24px'
+              }}>Category: Architectural Glass</div>
+              
+              <h1 style={{
+                fontFamily: 'Georgia, serif',
+                fontSize: 'clamp(42px, 6vw, 76px)',
+                fontWeight: 'normal',
+                lineHeight: '1.1',
+                color: '#F0EDE8',
+                margin: '0 0 24px 0'
+              }}>
+                {product.name}<br/>
+                <span style={{ color: '#F5A623' }}>GLASS</span>
+              </h1>
+              
+              <p style={{
+                color: '#7A7570',
+                fontFamily: "'Courier New', Courier, monospace",
+                fontSize: '18px',
+                letterSpacing: '0.12em',
+                lineHeight: '1.6'
+              }}>
                 Precision-engineered {product.name} glass optimized for {product.application.toLowerCase()}. 
                 Featuring {product.process} processing for superior durability and clarity.
               </p>
             </div>
 
-            <div className="grid grid-cols-2 gap-8 border-y border-gray-200 py-10">
+            {/* Specifications Grid */}
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: '1fr 1fr',
+              gap: '32px',
+              padding: '32px 0',
+              borderTop: '1px solid #2A2A2A',
+              borderBottom: '1px solid #2A2A2A'
+            }}>
               <div>
-                <p className="text-xs text-gray-400 font-bold uppercase tracking-widest mb-1">Standard Thickness</p>
-                <p className="text-2xl font-black text-navy">{product.thickness}</p>
+                <div style={{
+                  color: '#7A7570',
+                  fontFamily: "'Courier New', Courier, monospace",
+                  fontSize: '14px',
+                  fontWeight: 'bold',
+                  letterSpacing: '0.12em',
+                  textTransform: 'uppercase',
+                  marginBottom: '8px'
+                }}>Standard Thickness</div>
+                <div style={{
+                  color: '#F0EDE8',
+                  fontFamily: "'Courier New', Courier, monospace",
+                  fontSize: '28px',
+                  fontWeight: 'bold',
+                  letterSpacing: '0.12em'
+                }}>{product.thickness}</div>
               </div>
+              
               <div>
-                <p className="text-xs text-gray-400 font-bold uppercase tracking-widest mb-1">Processing Method</p>
-                <p className="text-2xl font-black text-navy">{product.process}</p>
+                <div style={{
+                  color: '#7A7570',
+                  fontFamily: "'Courier New', Courier, monospace",
+                  fontSize: '14px',
+                  fontWeight: 'bold',
+                  letterSpacing: '0.12em',
+                  textTransform: 'uppercase',
+                  marginBottom: '8px'
+                }}>Processing Method</div>
+                <div style={{
+                  color: '#F0EDE8',
+                  fontFamily: "'Courier New', Courier, monospace",
+                  fontSize: '28px',
+                  fontWeight: 'bold',
+                  letterSpacing: '0.12em'
+                }}>{product.process}</div>
               </div>
+              
               <div>
-                <p className="text-xs text-gray-400 font-bold uppercase tracking-widest mb-1">Primary Application</p>
-                <p className="text-2xl font-black text-navy">{product.application}</p>
+                <div style={{
+                  color: '#7A7570',
+                  fontFamily: "'Courier New', Courier, monospace",
+                  fontSize: '14px',
+                  fontWeight: 'bold',
+                  letterSpacing: '0.12em',
+                  textTransform: 'uppercase',
+                  marginBottom: '8px'
+                }}>Primary Application</div>
+                <div style={{
+                  color: '#F0EDE8',
+                  fontFamily: "'Courier New', Courier, monospace",
+                  fontSize: '28px',
+                  fontWeight: 'bold',
+                  letterSpacing: '0.12em'
+                }}>{product.application}</div>
               </div>
+              
               <div>
-                <p className="text-xs text-gray-400 font-bold uppercase tracking-widest mb-1">Est. Market Rate</p>
-                <p className="text-2xl font-black text-amber italic">₹{product.priceMin}-{product.priceMax}/sq.ft</p>
+                <div style={{
+                  color: '#7A7570',
+                  fontFamily: "'Courier New', Courier, monospace",
+                  fontSize: '14px',
+                  fontWeight: 'bold',
+                  letterSpacing: '0.12em',
+                  textTransform: 'uppercase',
+                  marginBottom: '8px'
+                }}>Est. Market Rate</div>
+                <div style={{
+                  color: '#F5A623',
+                  fontFamily: "'Courier New', Courier, monospace",
+                  fontSize: '28px',
+                  fontWeight: 'bold',
+                  letterSpacing: '0.12em'
+                }}>₹{product.priceMin}-{product.priceMax}/sq.ft</div>
               </div>
             </div>
 
+            {/* Performance Tags */}
             <div>
-              <h3 className="text-lg font-bold text-navy mb-6">Key Performance Tags</h3>
-              <div className="flex flex-wrap gap-3">
+              <div style={{
+                color: '#7A7570',
+                fontFamily: "'Courier New', Courier, monospace",
+                fontSize: '16px',
+                fontWeight: 'bold',
+                letterSpacing: '0.12em',
+                textTransform: 'uppercase',
+                marginBottom: '16px'
+              }}>Performance Tags</div>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
                 {product.tags.map(tag => (
-                  <span key={tag} className="px-6 py-3 bg-white border border-gray-100 rounded-2xl text-gray-600 font-bold text-sm shadow-sm hover:shadow-md transition-shadow">
-                    #{tag}
-                  </span>
+                  <span 
+                    key={tag} 
+                    style={{
+                      padding: '8px 16px',
+                      border: '1px solid #2A2A2A',
+                      background: '#141414',
+                      color: '#7A7570',
+                      fontFamily: "'Courier New', Courier, monospace",
+                      fontSize: '14px',
+                      fontWeight: 'bold',
+                      letterSpacing: '0.12em'
+                    }}
+                  >#{tag}</span>
                 ))}
               </div>
             </div>
 
             {/* Quote Request Card */}
-            <div className="bg-navy rounded-3xl p-10 text-white shadow-2xl relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-amber/10 blur-3xl"></div>
-              <h3 className="text-2xl font-bold mb-4">Request a Site Measurement</h3>
-              <p className="text-gray-400 text-sm mb-8">Get exact pricing from 3 verified local fabricators within 24 hours.</p>
+            <div style={{
+              border: '1px solid #F5A623',
+              padding: '40px',
+              background: '#F5A62310',
+              position: 'relative',
+              overflow: 'hidden'
+            }}>
+              <div style={{
+                position: 'absolute',
+                top: '-40px',
+                right: '-40px',
+                width: '120px',
+                height: '120px',
+                background: 'radial-gradient(circle, #F5A62320 0%, transparent 70%)'
+              }}></div>
               
-              <div className="flex gap-4">
-                <Link href="/estimate" className="flex-1 bg-amber text-navy py-4 rounded-xl font-black text-center hover:scale-105 transition-transform flex items-center justify-center">
-                  Instant Estimate
-                </Link>
-                <Link href="/service-partners" className="flex-1 bg-white/10 border border-white/20 py-4 rounded-xl font-bold hover:bg-white/20 transition-colors text-center text-white">
-                  Contact Expert
-                </Link>
+              <h3 style={{
+                color: '#F0EDE8',
+                fontFamily: "'Courier New', Courier, monospace",
+                fontSize: '24px',
+                fontWeight: 'bold',
+                letterSpacing: '0.12em',
+                marginBottom: '16px'
+              }}>Request Site Measurement</h3>
+              
+              <p style={{
+                color: '#7A7570',
+                fontFamily: "'Courier New', Courier, monospace",
+                fontSize: '16px',
+                letterSpacing: '0.12em',
+                lineHeight: '1.5',
+                marginBottom: '32px'
+              }}>
+                Get exact pricing from 3 verified local fabricators within 24 hours.
+              </p>
+              
+              <div style={{ display: 'flex', gap: '16px' }}>
+                <Link 
+                  href="/estimate" 
+                  style={{
+                    flex: 1,
+                    padding: '16px',
+                    background: '#F5A623',
+                    color: '#0C0C0C',
+                    border: 'none',
+                    fontFamily: "'Courier New', Courier, monospace",
+                    fontSize: '16px',
+                    fontWeight: 'bold',
+                    letterSpacing: '0.12em',
+                    textDecoration: 'none',
+                    textAlign: 'center',
+                    cursor: 'pointer',
+                    textTransform: 'uppercase'
+                  }}
+                >Instant Estimate</Link>
+                
+                <Link 
+                  href="/service-partners" 
+                  style={{
+                    flex: 1,
+                    padding: '16px',
+                    border: '1px solid #2A2A2A',
+                    background: 'transparent',
+                    color: '#7A7570',
+                    fontFamily: "'Courier New', Courier, monospace",
+                    fontSize: '16px',
+                    fontWeight: 'bold',
+                    letterSpacing: '0.12em',
+                    textDecoration: 'none',
+                    textAlign: 'center',
+                    cursor: 'pointer',
+                    textTransform: 'uppercase'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.target.style.background = '#141414';
+                    e.target.style.color = '#F0EDE8';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.target.style.background = 'transparent';
+                    e.target.style.color = '#7A7570';
+                  }}
+                >Contact Expert</Link>
               </div>
             </div>
           </div>
@@ -111,16 +354,108 @@ export default async function ProductDetailPage({ params }) {
 
         {/* Complete Your System Section */}
         {relatedAlliedProducts.length > 0 && (
-          <section className="mt-32">
-            <h2 className="text-3xl font-black text-navy mb-12 uppercase tracking-tighter">Complete Your System</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {relatedAlliedProducts.map((item) => (
-                <div key={item.id} className="bg-white p-8 rounded-3xl border border-gray-100 hover:shadow-xl transition-all group">
-                  <div className="w-12 h-12 bg-amber/10 rounded-xl mb-4 flex items-center justify-center text-xl group-hover:bg-amber/20 transition-colors">🔧</div>
-                  <div className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mb-1">{item.category}</div>
-                  <h4 className="font-bold text-navy mb-2">{item.name}</h4>
-                  <p className="text-sm text-gray-500 mb-6">{item.price}</p>
-                  <Link href="/catalog" className="text-amber font-bold text-sm hover:underline">View Product →</Link>
+          <section style={{ marginTop: '120px' }}>
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '24px',
+              marginBottom: '48px',
+              paddingBottom: '16px',
+              borderBottom: '1px solid #2A2A2A'
+            }}>
+              <span style={{
+                color: '#F5A623',
+                fontFamily: "'Courier New', Courier, monospace",
+                fontSize: '28px',
+                fontWeight: 'bold',
+                letterSpacing: '0.12em'
+              }}>04</span>
+              <div>
+                <h2 style={{
+                  color: '#F0EDE8',
+                  fontFamily: "'Courier New', Courier, monospace",
+                  fontSize: '20px',
+                  fontWeight: 'bold',
+                  letterSpacing: '0.12em',
+                  margin: 0
+                }}>COMPLETE YOUR SYSTEM</h2>
+                <p style={{
+                  color: '#7A7570',
+                  fontFamily: "'Courier New', Courier, monospace",
+                  fontSize: '15px',
+                  letterSpacing: '0.12em',
+                  margin: '4px 0 0 0'
+                }}>RELATED ALLIED PRODUCTS</p>
+              </div>
+            </div>
+            
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(4, 1fr)',
+              gap: '0px',
+              border: '1px solid #2A2A2A',
+              borderTop: 'none'
+            }}>
+              {relatedAlliedProducts.map((item, i) => (
+                <div
+                  key={item.id}
+                  style={{
+                    padding: '32px 24px',
+                    borderRight: i < 3 ? '1px solid #2A2A2A' : 'none',
+                    borderBottom: '1px solid #2A2A2A',
+                    background: 'transparent'
+                  }}
+                >
+                  <div style={{
+                    width: '48px',
+                    height: '48px',
+                    border: '1px solid #2A2A2A',
+                    background: '#141414',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    marginBottom: '16px',
+                    fontSize: '24px'
+                  }}>🔧</div>
+                  
+                  <div style={{
+                    color: '#7A7570',
+                    fontFamily: "'Courier New', Courier, monospace",
+                    fontSize: '14px',
+                    fontWeight: 'bold',
+                    letterSpacing: '0.12em',
+                    textTransform: 'uppercase',
+                    marginBottom: '8px'
+                  }}>{item.category}</div>
+                  
+                  <h4 style={{
+                    color: '#F0EDE8',
+                    fontFamily: "'Courier New', Courier, monospace",
+                    fontSize: '18px',
+                    fontWeight: 'bold',
+                    letterSpacing: '0.12em',
+                    marginBottom: '8px'
+                  }}>{item.name}</h4>
+                  
+                  <p style={{
+                    color: '#7A7570',
+                    fontFamily: "'Courier New', Courier, monospace",
+                    fontSize: '16px',
+                    letterSpacing: '0.12em',
+                    marginBottom: '16px'
+                  }}>{item.price}</p>
+                  
+                  <Link 
+                    href="/catalog" 
+                    style={{
+                      color: '#F5A623',
+                      fontFamily: "'Courier New', Courier, monospace",
+                      fontSize: '15px',
+                      fontWeight: 'bold',
+                      letterSpacing: '0.12em',
+                      textDecoration: 'none'
+                    }}
+                  >VIEW PRODUCT →</Link>
                 </div>
               ))}
             </div>

@@ -1,17 +1,70 @@
 export default function ProductSkeleton() {
   return (
-    <div className="glass-card rounded-[32px] overflow-hidden animate-pulse">
-      <div className="aspect-[4/3] bg-gray-100"></div>
-      <div className="p-8 space-y-4">
-        <div className="h-6 bg-gray-100 rounded-full w-2/3"></div>
-        <div className="h-3 bg-gray-50 rounded-full w-1/3"></div>
-        <div className="h-12 bg-gray-50 rounded-2xl w-full"></div>
-        <div className="flex justify-between items-center pt-4 border-t border-gray-50">
-          <div className="space-y-2">
-            <div className="h-2 bg-gray-50 rounded-full w-12"></div>
-            <div className="h-6 bg-gray-100 rounded-full w-20"></div>
+    <div style={{
+      border: '1px solid #2A2A2A',
+      borderRadius: '2px',
+      overflow: 'hidden',
+      animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite'
+    }}>
+      <div style={{
+        aspectRatio: '4/3',
+        background: '#141414'
+      }}></div>
+      <div style={{
+        padding: '32px',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '16px'
+      }}>
+        <div style={{
+          height: '24px',
+          background: '#141414',
+          borderRadius: '2px',
+          width: '66%'
+        }}></div>
+        <div style={{
+          height: '12px',
+          background: '#0C0C0C',
+          borderRadius: '2px',
+          width: '33%'
+        }}></div>
+        <div style={{
+          height: '48px',
+          background: '#0C0C0C',
+          borderRadius: '2px',
+          width: '100%'
+        }}></div>
+        <div style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          paddingTop: '16px',
+          borderTop: '1px solid #2A2A2A'
+        }}>
+          <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '8px'
+          }}>
+            <div style={{
+              height: '8px',
+              background: '#0C0C0C',
+              borderRadius: '2px',
+              width: '48px'
+            }}></div>
+            <div style={{
+              height: '24px',
+              background: '#141414',
+              borderRadius: '2px',
+              width: '80px'
+            }}></div>
           </div>
-          <div className="h-10 bg-gray-100 rounded-xl w-24"></div>
+          <div style={{
+            height: '40px',
+            background: '#141414',
+            borderRadius: '2px',
+            width: '96px'
+          }}></div>
         </div>
       </div>
     </div>

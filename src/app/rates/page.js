@@ -6,8 +6,10 @@ export default function RatesDashboard() {
   const timestamp = "9:00 AM IST, " + new Date().toLocaleDateString();
 
   // Mock yesterday's rates and trends
-  const ratesWithTrends = dailyRates.rates.map((rate, i) => {
-    const todayNum = parseInt(rate.rate.split(' - ')[0].replace('₹', ''));
+  const ratesWithTrends = dailyRates.map((rate, i) => {
+    const todayNum = rate.low;
+    const rateString = `₹${rate.low} - ₹${rate.high}`;
+    
     // Generate a mocked yesterday rate (within +/- 5% of today)
     const diff = (i % 2 === 0 ? 1 : -1) * (i + 2);
     const yesterdayRate = todayNum - diff;
@@ -15,6 +17,8 @@ export default function RatesDashboard() {
     
     return {
       ...rate,
+      name: rate.type,
+      rate: rateString,
       yesterday: `₹${yesterdayRate}`,
       change: changePct,
       isUp: todayNum > yesterdayRate
@@ -22,16 +26,51 @@ export default function RatesDashboard() {
   });
 
   return (
-    <div className="min-h-screen bg-white">
+    <div style={{ minHeight: '100vh', background: '#0C0C0C', paddingTop: '28px', paddingBottom: '80px' }}>
       
       {/* Marquee Ticker */}
-      <div className="bg-navy py-3 overflow-hidden whitespace-nowrap border-b border-white/10 pt-20">
-        <div className="flex animate-marquee gap-10 items-center">
+      <div style={{
+        background: '#141414',
+        padding: '12px 0',
+        overflow: 'hidden',
+        whiteSpace: 'nowrap',
+        borderBottom: '1px solid #2A2A2A',
+        marginTop: '80px'
+      }}>
+        <div style={{
+          display: 'flex',
+          width: '200%',
+          animation: 'marquee 30s linear infinite'
+        }}>
           {[...ratesWithTrends, ...ratesWithTrends].map((item, i) => (
-            <div key={i} className="flex items-center gap-3">
-              <span className="text-gray-400 font-bold uppercase text-[10px] tracking-widest">{item.name}</span>
-              <span className="text-white font-black text-sm">{item.rate.split(' - ')[0]}</span>
-              <span className={`text-[10px] font-bold ${item.isUp ? 'text-green-400' : 'text-red-400'}`}>
+            <div key={i} style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '24px',
+              marginRight: '48px'
+            }}>
+              <span style={{
+                color: '#7A7570',
+                fontFamily: 'Courier New, Courier, monospace',
+                fontSize: '14px',
+                fontWeight: 'bold',
+                letterSpacing: '0.12em',
+                textTransform: 'uppercase'
+              }}>{item.name}</span>
+              <span style={{
+                color: '#F0EDE8',
+                fontFamily: 'Courier New, Courier, monospace',
+                fontSize: '16px',
+                fontWeight: 'bold',
+                letterSpacing: '0.12em'
+              }}>{item.rate.split(' - ')[0]}</span>
+              <span style={{
+                color: item.isUp ? '#3ECA7A' : '#E84040',
+                fontFamily: 'Courier New, Courier, monospace',
+                fontSize: '14px',
+                fontWeight: 'bold',
+                letterSpacing: '0.12em'
+              }}>
                 {item.isUp ? '▲' : '▼'} {Math.abs(item.change)}%
               </span>
             </div>
@@ -39,73 +78,246 @@ export default function RatesDashboard() {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div style={{ maxWidth: '1440px', margin: '0 auto', padding: '0 24px' }}>
         
         {/* Header Section */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-6 px-2">
+        <div style={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
+          alignItems: 'flex-start',
+          marginBottom: '48px',
+          gap: '24px'
+        }}>
           <div>
-            <div className="inline-flex items-center px-4 py-1 rounded-full bg-blue-50 text-blue-600 text-[10px] font-black uppercase tracking-widest mb-4">
+            <div style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '12px',
+              padding: '8px 20px',
+              background: '#4A9EDB20',
+              border: '1px solid #4A9EDB',
+              borderRadius: '0px',
+              color: '#4A9EDB',
+              fontFamily: 'Courier New, Courier, monospace',
+              fontSize: '14px',
+              fontWeight: 'bold',
+              letterSpacing: '0.12em',
+              textTransform: 'uppercase',
+              marginBottom: '24px'
+            }}>
               Real-time Market Index
             </div>
-            <h1 className="text-3xl sm:text-5xl font-black text-navy mb-2 tracking-tight">Daily Glass Pulse</h1>
-            <p className="text-gray-500 font-medium text-sm sm:text-base">Official market indices for primary architectural glass grades.</p>
+            <h1 style={{
+              color: '#F0EDE8',
+              fontFamily: 'Georgia, serif',
+              fontSize: 'clamp(42px, 7vw, 84px)',
+              fontWeight: 'normal',
+              lineHeight: '1.1',
+              marginBottom: '16px'
+            }}>Daily Glass Pulse</h1>
+            <p style={{
+              color: '#7A7570',
+              fontFamily: 'Courier New, Courier, monospace',
+              fontSize: '18px',
+              letterSpacing: '0.12em',
+              lineHeight: '1.5'
+            }}>
+              Official market indices for primary architectural glass grades.
+            </p>
           </div>
-          <div className="text-left md:text-right border-l-2 md:border-l-0 md:border-r-2 border-glass-blue/20 pl-4 md:pl-0 md:pr-4">
-            <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mb-1">Last Updated</p>
-            <p className="text-navy font-black text-lg">{timestamp}</p>
+          <div style={{
+            borderLeft: '2px solid #4A9EDB20',
+            paddingLeft: '16px'
+          }}>
+            <div style={{
+              color: '#7A7570',
+              fontFamily: 'Courier New, Courier, monospace',
+              fontSize: '14px',
+              fontWeight: 'bold',
+              letterSpacing: '0.12em',
+              textTransform: 'uppercase',
+              marginBottom: '4px'
+            }}>Last Updated</div>
+            <div style={{
+              color: '#F0EDE8',
+              fontFamily: 'Courier New, Courier, monospace',
+              fontSize: '20px',
+              fontWeight: 'bold',
+              letterSpacing: '0.12em'
+            }}>{timestamp}</div>
           </div>
         </div>
 
-        {/* Rates Table/Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
+        {/* Rates Grid */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(2, 1fr)',
+          gap: '0px',
+          border: '1px solid #2A2A2A',
+          borderTop: 'none'
+        }}>
           {ratesWithTrends.map((rate, i) => (
-            <div key={i} className="glass-card p-6 sm:p-8 rounded-[24px] sm:rounded-[32px] border border-gray-100 flex flex-col sm:flex-row items-start sm:items-center justify-between group hover:shadow-2xl transition-all gap-6">
-              <div className="flex items-center gap-4 sm:gap-6 w-full sm:w-auto">
-                <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gray-50 rounded-xl sm:rounded-2xl flex items-center justify-center text-2xl sm:text-3xl group-hover:scale-110 transition-transform flex-shrink-0">
+            <div key={i} style={{
+              padding: '40px 32px',
+              borderRight: i % 2 === 0 ? '1px solid #2A2A2A' : 'none',
+              borderBottom: '1px solid #2A2A2A',
+              background: 'transparent',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-between',
+              gap: '32px'
+            }}>
+              <div style={{
+                display: 'flex',
+                alignItems: 'flex-start',
+                gap: '24px'
+              }}>
+                <div style={{
+                  width: '64px',
+                  height: '64px',
+                  background: '#141414',
+                  border: '1px solid #2A2A2A',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '36px',
+                  flexShrink: 0
+                }}>
                   {glassProducts.find(p => p.name === rate.name)?.imageIcon || '💎'}
                 </div>
                 <div>
-                  <h3 className="font-black text-navy text-lg sm:text-xl mb-1">{rate.name}</h3>
-                  <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest leading-none">Base Category</p>
+                  <h3 style={{
+                    color: '#F0EDE8',
+                    fontFamily: 'Courier New, Courier, monospace',
+                    fontSize: '24px',
+                    fontWeight: 'bold',
+                    letterSpacing: '0.12em',
+                    marginBottom: '8px'
+                  }}>{rate.name}</h3>
+                  <p style={{
+                    color: '#7A7570',
+                    fontFamily: 'Courier New, Courier, monospace',
+                    fontSize: '14px',
+                    fontWeight: 'bold',
+                    letterSpacing: '0.12em',
+                    textTransform: 'uppercase',
+                    lineHeight: '1'
+                  }}>Base Category</p>
                 </div>
               </div>
 
-              <div className="flex items-center justify-between sm:justify-end gap-6 sm:gap-10 w-full sm:w-auto pt-4 sm:pt-0 border-t sm:border-t-0 border-gray-50">
-                <div className="hidden lg:block">
-                  <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mb-2">Trend</p>
-                  <svg className="w-20 h-8 text-gray-200" viewBox="0 0 100 30">
-                    <path 
-                      d={rate.isUp ? "M0 25 L20 20 L40 22 L60 10 L80 15 L100 5" : "M0 5 L20 15 L40 10 L60 22 L80 20 L100 25"} 
-                      fill="none" 
-                      stroke={rate.isUp ? "#4ade80" : "#f87171"} 
-                      strokeWidth="3" 
-                      strokeLinecap="round"
-                    />
-                  </svg>
+              <div style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'flex-end',
+                gap: '24px'
+              }}>
+                <div>
+                  <div style={{
+                    color: '#7A7570',
+                    fontFamily: 'Courier New, Courier, monospace',
+                    fontSize: '14px',
+                    fontWeight: 'bold',
+                    letterSpacing: '0.12em',
+                    textTransform: 'uppercase',
+                    marginBottom: '8px'
+                  }}>Trend</div>
+                  <div style={{
+                    width: '80px',
+                    height: '32px'
+                  }}>
+                    <svg viewBox="0 0 100 30" style={{ width: '100%', height: '100%' }}>
+                      <path 
+                        d={rate.isUp ? "M0 25 L20 20 L40 22 L60 10 L80 15 L100 5" : "M0 5 L20 15 L40 10 L60 22 L80 20 L100 25"} 
+                        fill="none" 
+                        stroke={rate.isUp ? "#3ECA7A" : "#E84040"} 
+                        strokeWidth="2" 
+                        strokeLinecap="round"
+                      />
+                    </svg>
+                  </div>
                 </div>
                 
-                <div className="text-left sm:text-right">
-                  <div className="flex items-center sm:justify-end gap-2 mb-1">
-                    <span className={`text-[10px] sm:text-xs font-black ${rate.isUp ? 'text-green-500' : 'text-red-500'}`}>
+                <div style={{ textAlign: 'right' }}>
+                  <div style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'flex-end',
+                    gap: '8px',
+                    marginBottom: '4px'
+                  }}>
+                    <span style={{
+                      color: rate.isUp ? '#3ECA7A' : '#E84040',
+                      fontFamily: 'Courier New, Courier, monospace',
+                      fontSize: '14px',
+                      fontWeight: 'bold',
+                      letterSpacing: '0.12em'
+                    }}>
                       {rate.isUp ? '▲' : '▼'} {Math.abs(rate.change)}%
                     </span>
-                    <span className="text-[10px] text-gray-300 font-bold">VS YESTERDAY</span>
+                    <span style={{
+                      color: '#7A7570',
+                      fontFamily: 'Courier New, Courier, monospace',
+                      fontSize: '14px',
+                      fontWeight: 'bold',
+                      letterSpacing: '0.12em'
+                    }}>VS YESTERDAY</span>
                   </div>
-                  <p className="text-2xl sm:text-3xl font-black text-navy">{rate.rate.split(' - ')[0]}</p>
-                  <p className="text-[10px] text-gray-400 font-medium">Ex-Factory Price /sq.ft</p>
+                  <div style={{
+                    color: '#F0EDE8',
+                    fontFamily: 'Courier New, Courier, monospace',
+                    fontSize: '36px',
+                    fontWeight: 'bold',
+                    letterSpacing: '0.12em'
+                  }}>{rate.rate.split(' - ')[0]}</div>
+                  <p style={{
+                    color: '#7A7570',
+                    fontFamily: 'Courier New, Courier, monospace',
+                    fontSize: '14px',
+                    fontWeight: 'bold',
+                    letterSpacing: '0.12em'
+                  }}>Ex-Factory Price /sq.ft</p>
                 </div>
               </div>
             </div>
           ))}
         </div>
 
-        <div className="mt-16 bg-gray-50 p-8 rounded-3xl border border-gray-100">
-          <div className="flex items-start gap-4">
-            <div className="text-blue-600 text-2xl">ℹ️</div>
+        {/* Market Notice */}
+        <div style={{
+          marginTop: '64px',
+          padding: '32px',
+          background: '#141414',
+          border: '1px solid #2A2A2A'
+        }}>
+          <div style={{
+            display: 'flex',
+            alignItems: 'flex-start',
+            gap: '16px'
+          }}>
+            <div style={{
+              color: '#4A9EDB',
+              fontSize: '28px'
+            }}>ℹ️</div>
             <div>
-              <p className="text-sm font-bold text-navy mb-2 underline decoration-blue-200 underline-offset-4">Market Notice</p>
-              <p className="text-sm text-gray-500 max-w-4xl leading-relaxed">
-                Rates listed above are indicative wholesale market indices. Actual prices may vary significantly based on the specific factory output, geographic location of the vendor, site logistics, and bulk order quantities. 
+              <p style={{
+                color: '#F0EDE8',
+                fontFamily: 'Courier New, Courier, monospace',
+                fontSize: '18px',
+                fontWeight: 'bold',
+                letterSpacing: '0.12em',
+                marginBottom: '8px'
+              }}>Market Notice</p>
+              <p style={{
+                color: '#7A7570',
+                fontFamily: 'Courier New, Courier, monospace',
+                fontSize: '16px',
+                letterSpacing: '0.12em',
+                lineHeight: '1.5',
+                margin: 0
+              }}>
+                Rates listed above are indicative wholesale market indices. Actual prices may vary significantly based on the specific factory output, geographic location of the vendor, site logistics, and bulk order quantities.
                 <br/><br/>
                 For custom processing (Toughening, Lamination, Edging), additional conversion costs will apply. Always request a formal quote for billable projects.
               </p>
@@ -118,11 +330,6 @@ export default function RatesDashboard() {
         @keyframes marquee {
           0% { transform: translateX(0); }
           100% { transform: translateX(-50%); }
-        }
-        .animate-marquee {
-          display: flex;
-          width: 200%;
-          animation: marquee 30s linear infinite;
         }
         .animate-marquee:hover {
           animation-play-state: paused;

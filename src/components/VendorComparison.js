@@ -21,21 +21,67 @@ export default function VendorComparison({ vendors, basePrice }) {
   }, [vendors, basePrice, sortKey]);
 
   return (
-    <section className="mt-20">
-      <div className="flex flex-col md:flex-row justify-between items-end mb-8 gap-4">
+    <section style={{ marginTop: '80px' }}>
+      <div style={{
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        alignItems: 'flex-end',
+        marginBottom: '32px',
+        gap: '16px'
+      }}>
         <div>
-          <h2 className="text-3xl font-black text-navy mb-2">Vendor Price Comparison</h2>
-          <p className="text-gray-500 text-sm">Compare real-time quotes from verified factory partners in your region.</p>
+          <h2 style={{
+            color: '#F0EDE8',
+            fontFamily: 'Georgia, serif',
+            fontSize: 'clamp(30px, 5vw, 48px)',
+            fontWeight: 'normal',
+            lineHeight: '1.1',
+            marginBottom: '8px'
+          }}>Vendor Price Comparison</h2>
+          <p style={{
+            color: '#7A7570',
+            fontFamily: 'Courier New, Courier, monospace',
+            fontSize: '18px',
+            letterSpacing: '0.12em',
+            lineHeight: '1.5'
+          }}>
+            Compare real-time quotes from verified factory partners in your region.
+          </p>
         </div>
-        <div className="flex items-center gap-4 bg-gray-50 p-2 rounded-xl">
-          <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest px-2">Sort by:</span>
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '16px',
+          padding: '8px',
+          background: '#141414',
+          border: '1px solid #2A2A2A'
+        }}>
+          <span style={{
+            color: '#7A7570',
+            fontFamily: 'Courier New, Courier, monospace',
+            fontSize: '14px',
+            fontWeight: 'bold',
+            letterSpacing: '0.12em',
+            textTransform: 'uppercase',
+            paddingLeft: '8px'
+          }}>Sort by:</span>
           {['price', 'rating', 'delivery'].map(key => (
             <button
               key={key}
               onClick={() => setSortKey(key)}
-              className={`px-4 py-1.5 rounded-lg text-xs font-bold capitalize transition-all ${
-                sortKey === key ? 'bg-navy text-white' : 'text-gray-500 hover:text-navy'
-              }`}
+              style={{
+                padding: '6px 16px',
+                background: sortKey === key ? '#F5A623' : 'transparent',
+                color: sortKey === key ? '#0C0C0C' : '#7A7570',
+                border: 'none',
+                fontFamily: 'Courier New, Courier, monospace',
+                fontSize: '14px',
+                fontWeight: 'bold',
+                letterSpacing: '0.12em',
+                textTransform: 'capitalize',
+                cursor: 'pointer'
+              }}
             >
               {key}
             </button>
@@ -43,48 +89,142 @@ export default function VendorComparison({ vendors, basePrice }) {
         </div>
       </div>
 
-      <div className="bg-white rounded-[32px] border border-gray-100 shadow-xl overflow-hidden">
-        <table className="w-full text-left">
-          <thead className="bg-navy">
-            <tr className="text-[10px] font-black uppercase text-gray-400 tracking-widest">
-              <th className="px-8 py-5">Vendor Name</th>
-              <th className="px-8 py-5">Location</th>
-              <th className="px-8 py-5">Price (/sqft)</th>
-              <th className="px-8 py-5">Rating</th>
-              <th className="px-8 py-5">Est. Delivery</th>
-              <th className="px-8 py-5 text-right">Action</th>
+      <div style={{
+        background: '#141414',
+        border: '1px solid #2A2A2A',
+        overflow: 'hidden'
+      }}>
+        <table style={{
+          width: '100%',
+          textAlign: 'left'
+        }}>
+          <thead style={{
+            background: '#141414'
+          }}>
+            <tr style={{
+              color: '#7A7570',
+              fontFamily: 'Courier New, Courier, monospace',
+              fontSize: '14px',
+              fontWeight: 'bold',
+              letterSpacing: '0.12em',
+              textTransform: 'uppercase'
+            }}>
+              <th style={{ padding: '20px 32px' }}>Vendor Name</th>
+              <th style={{ padding: '20px 32px' }}>Location</th>
+              <th style={{ padding: '20px 32px' }}>Price (/sqft)</th>
+              <th style={{ padding: '20px 32px' }}>Rating</th>
+              <th style={{ padding: '20px 32px' }}>Est. Delivery</th>
+              <th style={{ padding: '20px 32px', textAlign: 'right' }}>Action</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-50">
+          <tbody>
             {vendorList.map((vendor, i) => (
-              <tr key={vendor.id} className={`group hover:bg-gray-50 transition-colors ${i === 0 ? 'bg-blue-50/30' : ''}`}>
-                <td className="px-8 py-6 font-bold text-navy">
-                  <div className="flex items-center gap-3">
+              <tr key={vendor.id} style={{
+                background: i === 0 ? '#3ECA7A10' : 'transparent',
+                borderBottom: '1px solid #2A2A2A'
+              }}>
+                <td style={{
+                  padding: '24px 32px',
+                  color: '#F0EDE8',
+                  fontFamily: 'Courier New, Courier, monospace',
+                  fontWeight: 'bold',
+                  letterSpacing: '0.12em'
+                }}>
+                  <div style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '12px'
+                  }}>
                     {vendor.vendorName}
                     {i === 0 && (
-                      <span className="bg-green-100 text-green-700 text-[9px] font-black uppercase px-2 py-0.5 rounded-full tracking-tighter ring-1 ring-green-200">
+                      <span style={{
+                        background: '#3ECA7A20',
+                        color: '#3ECA7A',
+                        fontSize: '13px',
+                        fontFamily: 'Courier New, Courier, monospace',
+                        fontWeight: 'bold',
+                        letterSpacing: '0.12em',
+                        textTransform: 'uppercase',
+                        padding: '2px 8px',
+                        border: '1px solid #3ECA7A'
+                      }}>
                         Best Value
                       </span>
                     )}
                   </div>
                 </td>
-                <td className="px-8 py-6 text-sm text-gray-500">{vendor.city}</td>
-                <td className="px-8 py-6 font-black text-navy text-lg">
+                <td style={{
+                  padding: '24px 32px',
+                  color: '#7A7570',
+                  fontFamily: 'Courier New, Courier, monospace',
+                  fontSize: '16px',
+                  letterSpacing: '0.12em'
+                }}>{vendor.city}</td>
+                <td style={{
+                  padding: '24px 32px',
+                  color: '#F0EDE8',
+                  fontFamily: 'Courier New, Courier, monospace',
+                  fontSize: '22px',
+                  fontWeight: 'bold',
+                  letterSpacing: '0.12em'
+                }}>
                   ₹{vendor.finalPrice}
                 </td>
-                <td className="px-8 py-6">
-                  <div className="flex items-center gap-1">
-                    <span className="text-yellow-400 text-lg">★</span>
-                    <span className="font-bold text-navy">{vendor.rating}</span>
+                <td style={{
+                  padding: '24px 32px'
+                }}>
+                  <div style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '4px'
+                  }}>
+                    <span style={{ color: '#F5A623', fontSize: '20px' }}>★</span>
+                    <span style={{
+                      color: '#F0EDE8',
+                      fontFamily: 'Courier New, Courier, monospace',
+                      fontWeight: 'bold',
+                      letterSpacing: '0.12em'
+                    }}>{vendor.rating}</span>
                   </div>
                 </td>
-                <td className="px-8 py-6 text-sm font-medium text-gray-600">
+                <td style={{
+                  padding: '24px 32px',
+                  color: '#7A7570',
+                  fontFamily: 'Courier New, Courier, monospace',
+                  fontSize: '16px',
+                  fontWeight: 'bold',
+                  letterSpacing: '0.12em'
+                }}>
                   {vendor.deliveryDays} Days
                 </td>
-                <td className="px-8 py-6 text-right">
+                <td style={{
+                  padding: '24px 32px',
+                  textAlign: 'right'
+                }}>
                   <button 
                     onClick={() => showToast(`Quote request sent to ${vendor.vendorName}!`)}
-                    className="bg-white border border-gray-200 px-6 py-2 rounded-lg text-xs font-bold text-navy hover:bg-navy hover:text-white transition-all shadow-sm"
+                    style={{
+                      background: 'transparent',
+                      border: '1px solid #2A2A2A',
+                      padding: '8px 24px',
+                      color: '#7A7570',
+                      fontFamily: 'Courier New, Courier, monospace',
+                      fontSize: '14px',
+                      fontWeight: 'bold',
+                      letterSpacing: '0.12em',
+                      textTransform: 'uppercase',
+                      cursor: 'pointer'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.target.style.background = '#F5A623';
+                      e.target.style.color = '#0C0C0C';
+                      e.target.style.borderColor = '#F5A623';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.target.style.background = 'transparent';
+                      e.target.style.color = '#7A7570';
+                      e.target.style.borderColor = '#2A2A2A';
+                    }}
                   >
                     Get Quote
                   </button>

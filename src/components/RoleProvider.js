@@ -42,27 +42,121 @@ export function RoleProvider({ children }) {
     <RoleContext.Provider value={{ role, changeRole, setIsModalOpen, user, setUser, logout }}>
       {children}
       {isModalOpen && (
-        <div className="fixed inset-0 z-[200] flex items-center justify-center p-4">
-          <div className="absolute inset-0 bg-navy/80 backdrop-blur-xl" />
-          <div className="bg-white rounded-[48px] p-12 max-w-4xl w-full relative z-10 shadow-2xl animate-in zoom-in-95 duration-500">
-            <h2 className="text-4xl font-black text-navy text-center mb-4">Welcome to GlassIQ by AmalGus</h2>
-            <p className="text-gray-500 text-center mb-12 text-lg">Help us customize your experience. Who are you?</p>
+        <div style={{
+          position: 'fixed',
+          inset: 0,
+          zIndex: 200,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: '16px',
+          background: 'rgba(0,0,0,0.92)',
+          backdropFilter: 'blur(8px)'
+        }}>
+          <div style={{
+            background: '#141414',
+            border: '1px solid #2A2A2A',
+            maxWidth: '640px',
+            width: '100%',
+            padding: '32px',
+            position: 'relative'
+          }}>
+            {/* Header Section */}
+            <div style={{
+              borderBottom: '1px solid #2A2A2A',
+              paddingBottom: '24px',
+              marginBottom: '32px'
+            }}>
+              <div style={{
+                color: '#7A7570',
+                fontFamily: "'Courier New', Courier, monospace",
+                fontSize: '17px',
+                fontWeight: 'bold',
+                letterSpacing: '0.12em',
+                marginBottom: '8px'
+              }}>SELECT YOUR ROLE</div>
+              <h2 style={{
+                color: '#F0EDE8',
+                fontFamily: 'Georgia, serif',
+                fontSize: '36px',
+                fontWeight: 'normal',
+                margin: 0
+              }}>WHO ARE YOU?</h2>
+            </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {/* Role Buttons Grid */}
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: '1fr 1fr',
+              gap: '16px'
+            }}>
               {[
-                { id: 'Homeowner', title: 'Homeowner', icon: '🏠', desc: 'Renovating my home' },
-                { id: 'Architect', title: 'Architect', icon: '📐', desc: 'Designing projects' },
-                { id: 'Builder', title: 'Builder', icon: '🏗️', desc: 'Constructing sites' },
-                { id: 'Dealer', title: 'Dealer', icon: '🤝', desc: 'Factory procurement' },
+                { id: 'Homeowner', title: 'HOMEOWNER', desc: 'Renovating my home', discount: '0%', color: '#3ECA7A' },
+                { id: 'Architect', title: 'ARCHITECT', desc: 'Designing projects', discount: '5%', color: '#4A9EDB' },
+                { id: 'Builder', title: 'BUILDER', desc: 'Constructing sites', discount: '8%', color: '#E84040' },
+                { id: 'Dealer', title: 'DEALER', desc: 'Factory procurement', discount: '12%', color: '#F5A623' },
               ].map((r) => (
                 <button
                   key={r.id}
                   onClick={() => changeRole(r.id)}
-                  className="p-8 bg-gray-50 rounded-3xl border-2 border-transparent hover:border-amber hover:bg-white hover:shadow-2xl transition-all group text-left"
+                  style={{
+                    padding: '20px',
+                    border: '1px solid #2A2A2A',
+                    background: 'transparent',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '8px',
+                    textAlign: 'left',
+                    transition: 'all 0.2s ease'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.target.style.borderColor = r.color;
+                    e.target.style.background = r.color + '20';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.target.style.borderColor = '#2A2A2A';
+                    e.target.style.background = 'transparent';
+                  }}
                 >
-                  <div className="text-5xl mb-6 group-hover:scale-110 transition-transform">{r.icon}</div>
-                  <h3 className="text-xl font-bold text-navy mb-2">{r.title}</h3>
-                  <p className="text-xs text-gray-400 font-medium leading-relaxed">{r.desc}</p>
+                  <div style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '8px'
+                  }}>
+                    <div style={{
+                      width: '8px',
+                      height: '8px',
+                      borderRadius: '50%',
+                      background: r.color
+                    }}></div>
+                    <div style={{
+                      color: '#F0EDE8',
+                      fontFamily: "'Courier New', Courier, monospace",
+                      fontSize: '20px',
+                      fontWeight: 'bold',
+                      letterSpacing: '0.12em'
+                    }}>{r.title}</div>
+                  </div>
+                  <div style={{
+                    color: '#7A7570',
+                    fontFamily: "'Courier New', Courier, monospace",
+                    fontSize: '17px',
+                    letterSpacing: '0.12em'
+                  }}>{r.desc}</div>
+                  {r.discount !== '0%' && (
+                    <div style={{
+                      alignSelf: 'flex-start',
+                      padding: '4px 8px',
+                      background: r.color + '20',
+                      border: `1px solid ${r.color}`,
+                      color: r.color,
+                      fontFamily: "'Courier New', Courier, monospace",
+                      fontSize: '15px',
+                      fontWeight: 'bold',
+                      letterSpacing: '0.12em'
+                    }}>{r.discount} DISCOUNT</div>
+                  )}
                 </button>
               ))}
             </div>
