@@ -6,7 +6,7 @@ GlassIQ is a sophisticated digital marketplace designed to transform the glass i
 
 ![GlassIQ Architecture](https://img.shields.io/badge/Architecture-Next.js%2016%20App%20Router-blue?style=for-the-badge)
 ![UI/UX](https://img.shields.io/badge/Design-Tailwind%20CSS%20%26%20Glassmorphism-F59E0B?style=for-the-badge)
-![AI](https://img.shields.io/badge/AI-Google%20Gemini%201.5%20Flash-black?style=for-the-badge)
+![AI](https://img.shields.io/badge/AI-Groq%20%26%20Google%20Gemini-black?style=for-the-badge)
 
 ---
 
@@ -35,10 +35,10 @@ GlassIQ is a sophisticated digital marketplace designed to transform the glass i
 
 - **Framework**: Next.js 16 (App Router)
 - **Styling**: Tailwind CSS v4
-- **AI Engine**: Google Gemini API (gemini-1.5-flash)
+- **AI Engine**: Groq (Llama 3.3 70B) or Google Gemini API
 - **State Management**: React Context API (Roles & Toasts)
 - **Deployment**: Vercel Ready
-- **Colors**: Navy (#0A1628) primary, Amber (#F59E0B) accent
+- **Colors**: Deep slate (#0f172a) primary, Amber (#F59E0B) accent
 
 ---
 
@@ -58,8 +58,15 @@ npm install
 ### 3. Set up Environment Variables
 Create a `.env.local` file in the root:
 ```env
-NEXT_PUBLIC_GEMINI_KEY=your_gemini_api_key_here
+NEXT_PUBLIC_GROQ_KEY=your_groq_key_here
+NEXT_PUBLIC_GEMINI_KEY=your_gemini_key_here
 ```
+
+**How to get API keys:**
+- **Groq**: https://console.groq.com/keys
+- **Google Gemini**: https://aistudio.google.com/app/apikey
+
+**Note**: Groq key should start with `gsk_` — the app automatically detects which one to use based on your key! If both are provided, Groq is used first.
 
 ### 4. Run Locally
 ```bash
