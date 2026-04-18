@@ -83,6 +83,8 @@ export async function getAiMatch(input) {
   try {
     const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
     
+    console.log("Calling Gemini API for query:", input);
+    
     const response = await fetch(endpoint, {
       method: 'POST',
       headers: {
@@ -112,9 +114,11 @@ User requirement: ${input}`
     });
 
     const data = await response.json();
+    console.log("Gemini API Response:", response.status, data);
 
     if (!response.ok) {
-      console.error("Gemini API Error:", data);
+      console.error("Gemini API Error Status:", response.status);
+      console.error("Gemini API Error Data:", JSON.stringify(data, null, 2));
       return null;
     }
 
@@ -124,6 +128,7 @@ User requirement: ${input}`
     }
 
     const textResponse = data.candidates[0].content.parts[0].text;
+    console.log("Gemini Text Response:", textResponse);
     const jsonMatch = textResponse.match(/\{[\s\S]*\}/);
     
     if (!jsonMatch) {
@@ -142,7 +147,7 @@ User requirement: ${input}`
     })) || null;
     
   } catch (error) {
-    console.error("AI Match Exception:", error);
+    console.error("AI Match Exception:", error.message, error.stack);
     return null;
   }
 }

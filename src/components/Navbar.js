@@ -1,5 +1,5 @@
 "use client";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRole } from "@/components/RoleProvider";
 import { useToast } from "@/components/ToastProvider";
@@ -9,12 +9,21 @@ export default function Navbar() {
   const { showToast } = useToast();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const navLinks = [
     { name: 'Products', href: '/catalog' },
     { name: 'Smart Match', href: '/smart-match', highlight: true },
     { name: 'Vendors', href: '/vendors' },
-    { name: 'Daily Rates', href: '/rates' },
+    { name: 'Rates', href: '/rates' },
     { name: 'Services', href: '/service-partners' },
   ];
 
@@ -33,171 +42,191 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="bg-white border-b border-gray-200 sticky top-0 z-50 print:hidden">
-      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12">
-        <div className="flex justify-between h-20 items-center">
-          
-          <div className="flex items-center">
-            <Link href="/" className="flex items-center gap-3 mr-6">
-              <span className="text-2xl font-black bg-gradient-to-r from-navy to-amber bg-clip-text text-transparent tracking-tighter">
-                GlassIQ by AmalGus
-              </span>
-            </Link>
+    <>
+      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        scrolled 
+          ? 'bg-slate-950/80 backdrop-blur-xl border-b border-slate-800' 
+          : 'bg-transparent'
+      }`}>
+        <div className="max-w-[1440px] mx-auto px-6">
+          <div className="flex justify-between h-20 items-center">
             
-            <div className="hidden xl:flex items-center gap-4">
-              <div className="h-4 w-px bg-gray-200"></div>
-              {role && (
-                <div className="flex items-center gap-2 bg-gray-50 px-4 py-1.5 rounded-full border border-gray-100">
-                  <span className="text-[10px] font-black uppercase text-gray-400 tracking-widest">Welcome,</span>
-                  <span className="text-[10px] font-black uppercase text-navy tracking-tight">{role}</span>
-                  <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></div>
+            <div className="flex items-center gap-8">
+              <Link href="/" className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-gradient-to-br from-amber-500 to-orange-500 rounded-xl flex items-center justify-center">
+                  <span className="text-xl font-black text-slate-950">G</span>
                 </div>
-              )}
-            </div>
-          </div>
-          
-          <div className="hidden lg:flex items-center space-x-6 xl:space-x-10">
-            {navLinks.map((link) => (
-              <Link 
-                key={link.name}
-                href={link.href} 
-                className={`${link.highlight ? 'text-amber font-black flex items-center gap-2' : 'text-gray-500 hover:text-navy font-bold'} text-sm tracking-tight transition-colors whitespace-nowrap`}
-              >
-                {link.highlight && <span className="w-1.5 h-1.5 bg-amber rounded-full"></span>}
-                {link.name}
+                <span className="text-xl font-black tracking-tight text-white">
+                  GlassIQ
+                </span>
               </Link>
-            ))}
-          </div>
-
-          <div className="flex items-center gap-4 sm:gap-6">
-            <button 
-              onClick={() => setIsModalOpen(true)}
-              className="text-[10px] font-black uppercase text-gray-400 hover:text-navy transition-colors tracking-[0.2em] hidden md:block border-b border-gray-100 hover:border-navy pb-1"
-            >
-              Switch Role
-            </button>
-            
-            <div className="hidden sm:flex items-center gap-4">
-              {user ? (
-                <button 
-                  onClick={logout}
-                  className="text-sm font-bold text-navy hover:text-red-500 transition-colors flex items-center gap-2 bg-gray-100 px-4 py-2 rounded-xl"
-                >
-                  <span className="w-2 h-2 rounded-full bg-green-500"></span>
-                  {user.name} (SignOut)
-                </button>
-              ) : (
-                <button 
-                  onClick={() => setIsAuthModalOpen(true)}
-                  className="text-sm font-bold text-gray-600 hover:text-navy transition-colors"
-                >
-                  SignIn
-                </button>
-              )}
-              <Link href="/estimate" className="bg-navy text-white px-6 py-3 rounded-xl font-bold text-sm hover:bg-amber hover:text-navy transition-all shadow-lg hover:shadow-amber/20">
-                Get Quotes
-              </Link>
-            </div>
-
-            <button 
-              className="lg:hidden p-2 text-navy"
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                {isMobileMenuOpen ? (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-                ) : (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16m-7 6h7" />
+              
+              <div className="hidden xl:flex items-center gap-6">
+                {role && (
+                  <div className="flex items-center gap-2 bg-slate-900/50 px-4 py-2 rounded-full border border-slate-700">
+                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span className="text-sm font-semibold text-slate-300">
+                      Welcome, <span className="text-amber-400">{role}</span>
+                    </span>
+                  </div>
                 )}
-              </svg>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {isMobileMenuOpen && (
-        <div className="lg:hidden bg-white border-t border-gray-100 absolute top-20 left-0 w-full shadow-2xl animate-in slide-in-from-top duration-300 overflow-hidden">
-          <div className="px-4 py-8 space-y-6">
-            <div className="grid grid-cols-1 gap-4">
+              </div>
+            </div>
+            
+            <div className="hidden lg:flex items-center space-x-2">
               {navLinks.map((link) => (
                 <Link 
                   key={link.name}
                   href={link.href} 
-                  className={`px-4 py-3 rounded-xl ${link.highlight ? 'bg-amber/5 text-amber' : 'text-navy'} font-black text-lg`}
-                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={`px-4 py-2 rounded-xl text-sm font-semibold transition-all ${
+                    link.highlight 
+                      ? 'text-amber-400 bg-amber-500/10' 
+                      : 'text-slate-400 hover:text-white hover:bg-slate-800'
+                  }`}
                 >
                   {link.name}
                 </Link>
               ))}
             </div>
-            
-            <div className="pt-6 border-t border-gray-100 flex flex-col gap-4">
+
+            <div className="flex items-center gap-4">
               <button 
-                onClick={() => {
-                  setIsModalOpen(true);
-                  setIsMobileMenuOpen(false);
-                }}
-                className="w-full text-left px-4 py-3 text-gray-400 font-bold uppercase tracking-widest text-xs"
+                onClick={() => setIsModalOpen(true)}
+                className="hidden md:flex items-center gap-2 px-5 py-2.5 rounded-xl border border-slate-700 text-sm font-semibold text-slate-300 hover:border-amber-500/50 hover:text-amber-400 transition-all"
               >
-                Switch Role ({role || 'None'})
+                <span>Switch Role</span>
               </button>
-              <div className="flex gap-4 px-4">
+              
+              <div className="hidden sm:flex items-center gap-3">
                 {user ? (
-                   <button onClick={logout} className="flex-1 py-4 bg-red-50 text-red-600 rounded-xl font-bold">Sign Out</button>
+                  <button 
+                    onClick={logout}
+                    className="px-5 py-2.5 rounded-xl bg-slate-800 text-slate-300 text-sm font-semibold hover:bg-slate-700 transition-all"
+                  >
+                    {user.name}
+                  </button>
                 ) : (
                   <button 
-                    onClick={() => {
-                      setIsAuthModalOpen(true);
-                      setIsMobileMenuOpen(false);
-                    }}
-                    className="flex-1 py-4 bg-gray-50 rounded-xl font-bold text-navy"
+                    onClick={() => setIsAuthModalOpen(true)}
+                    className="px-5 py-2.5 rounded-xl text-slate-300 text-sm font-semibold hover:text-white transition-all"
                   >
-                    SignIn
+                    Sign In
                   </button>
                 )}
-                <Link 
-                  href="/estimate" 
-                  className="flex-1 py-4 bg-navy text-white rounded-xl font-bold text-center"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  Get Quotes
+                <Link href="/estimate" className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 font-bold text-sm hover:from-amber-400 hover:to-orange-400 transition-all shadow-lg shadow-amber-500/20">
+                  Get Estimate
                 </Link>
               </div>
+
+              <button 
+                className="lg:hidden p-2 text-slate-300 hover:text-white transition-colors"
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              >
+                <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  {isMobileMenuOpen ? (
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                  ) : (
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16m-7 6h7" />
+                  )}
+                </svg>
+              </button>
             </div>
           </div>
         </div>
-      )}
 
-      {/* Auth Modal */}
+        {isMobileMenuOpen && (
+          <div className="lg:hidden bg-slate-950 border-t border-slate-800">
+            <div className="px-6 py-8 space-y-4">
+              {navLinks.map((link) => (
+                <Link 
+                  key={link.name}
+                  href={link.href} 
+                  className={`block px-4 py-4 rounded-2xl text-lg font-semibold ${
+                    link.highlight 
+                      ? 'text-amber-400 bg-amber-500/10' 
+                      : 'text-slate-300 hover:bg-slate-900'
+                  }`}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  {link.name}
+                </Link>
+              ))}
+              
+              <div className="pt-6 border-t border-slate-800 space-y-3">
+                <button 
+                  onClick={() => {
+                    setIsModalOpen(true);
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className="w-full px-4 py-4 rounded-2xl text-left text-slate-400 font-semibold hover:bg-slate-900"
+                >
+                  Switch Role
+                </button>
+                <div className="flex gap-3">
+                  {user ? (
+                    <button 
+                      onClick={logout} 
+                      className="flex-1 px-4 py-4 rounded-2xl bg-slate-900 text-slate-300 font-semibold"
+                    >
+                      Sign Out
+                    </button>
+                  ) : (
+                    <button 
+                      onClick={() => {
+                        setIsAuthModalOpen(true);
+                        setIsMobileMenuOpen(false);
+                      }}
+                      className="flex-1 px-4 py-4 rounded-2xl bg-slate-900 text-slate-300 font-semibold"
+                    >
+                      Sign In
+                    </button>
+                  )}
+                  <Link 
+                    href="/estimate" 
+                    className="flex-1 px-4 py-4 rounded-2xl bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 font-bold text-center"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    Get Estimate
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+      </nav>
+
+      {/* Spacer to prevent content from going under fixed navbar */}
+      <div className="h-20"></div>
+
       {isAuthModalOpen && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-          <div className="absolute inset-0 bg-navy/60 backdrop-blur-md" onClick={() => setIsAuthModalOpen(false)}></div>
-          <div className="bg-white rounded-[40px] p-10 max-w-md w-full relative z-10 shadow-2xl animate-in zoom-in-95 duration-300">
+          <div className="absolute inset-0 bg-slate-950/80 backdrop-blur-xl" onClick={() => setIsAuthModalOpen(false)}></div>
+          <div className="bg-slate-900 rounded-[2rem] p-10 max-w-md w-full relative z-10 shadow-2xl border border-slate-800">
             <div className="flex justify-between items-start mb-8">
               <div>
-                <h3 className="text-3xl font-black text-navy mb-2 tracking-tighter">Welcome Back</h3>
-                <p className="text-gray-500 text-sm">Sign in with your verified credentials</p>
+                <h3 className="text-3xl font-black text-white mb-2">Welcome Back</h3>
+                <p className="text-slate-400 text-sm">Sign in to your GlassIQ account</p>
               </div>
-              <button onClick={() => setIsAuthModalOpen(false)} className="p-2 hover:bg-gray-100 rounded-full transition-colors text-gray-400">
+              <button onClick={() => setIsAuthModalOpen(false)} className="p-2 hover:bg-slate-800 rounded-xl transition-colors text-slate-400">
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
               </button>
             </div>
-            <form className="space-y-6" onSubmit={handleLogin}>
+            <form className="space-y-5" onSubmit={handleLogin}>
               <div>
-                <label className="block text-[10px] font-black uppercase text-gray-400 mb-2 tracking-widest">Market ID / Email</label>
-                <input name="email" type="email" required placeholder="name@company.com" className="w-full p-4 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-amber font-bold text-navy transition-all" />
+                <label className="block text-xs font-black uppercase text-slate-500 mb-2 tracking-widest">Email</label>
+                <input name="email" type="email" required placeholder="name@company.com" className="w-full px-5 py-4 bg-slate-950 rounded-xl border border-slate-700 outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500/50 font-semibold text-white placeholder-slate-600 transition-all" />
               </div>
               <div>
-                <label className="block text-[10px] font-black uppercase text-gray-400 mb-2 tracking-widest">Secure PIN</label>
-                <input type="password" required placeholder="••••••••" className="w-full p-4 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-amber font-bold text-navy transition-all" />
+                <label className="block text-xs font-black uppercase text-slate-500 mb-2 tracking-widest">Password</label>
+                <input type="password" required placeholder="••••••••" className="w-full px-5 py-4 bg-slate-950 rounded-xl border border-slate-700 outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500/50 font-semibold text-white placeholder-slate-600 transition-all" />
               </div>
-              <button type="submit" className="w-full bg-navy text-white py-5 rounded-2xl font-black uppercase tracking-widest text-sm hover:bg-amber shadow-xl">
-                Enter Marketplace
+              <button type="submit" className="w-full py-4 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 font-black uppercase tracking-widest text-sm hover:from-amber-400 hover:to-orange-400 shadow-xl">
+                Sign In
               </button>
             </form>
           </div>
         </div>
       )}
-    </nav>
+    </>
   );
 }
